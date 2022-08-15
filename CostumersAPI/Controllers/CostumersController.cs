@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CostumersAPI.Costumer;
-using CostumersAPI.Services;
+using CostumersAPI.Services.Interfaces;
+using FluentValidation;
 
 namespace CostumersAPI.Controllers
 {
@@ -17,15 +18,17 @@ namespace CostumersAPI.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         public IActionResult PostNewCostumer(CostumerBase costumer)
         {
-            if (!costumer.Email.Equals(costumer.EmailConfirmation))
-                return BadRequest("Confirmação de Email divergente");
             try
             {
-                _costumerService.SaveNewCostumer(costumer);
+                _costumerService.ProcessNewCostumer(costumer);
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
             }
             catch (Exception e)
             {

@@ -1,3 +1,4 @@
+using CostumersAPI.Services.Interfaces;
 using CostumersAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
