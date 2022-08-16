@@ -72,7 +72,7 @@ namespace CostumersAPI.Controllers
         {
             try
             {
-                List<CostumerBase> costumers = _costumerService.GetAllCustomers();
+                var costumers = _costumerService.GetAllCustomers();
                 if (costumers.Count == 0)
                     return NotFound("Nenhum Cliente encontrado!");
                 else
