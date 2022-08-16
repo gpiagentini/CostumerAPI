@@ -10,11 +10,13 @@ namespace CostumersAPI.Controllers
     public class CostumersController : ControllerBase
     {
         private readonly ICostumerService _costumerService;
+        private readonly ILogger<CostumersController> _logger;
 
-        public CostumersController(ICostumerService costumerService)
+        public CostumersController(ICostumerService costumerService, ILogger<CostumersController> logger)
         {
             if (costumerService != null)
                 _costumerService = costumerService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -35,7 +37,7 @@ namespace CostumersAPI.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Exception while saving new costumer: {e}");
+                _logger.LogError($"Exception while saving new costumer: {e.Message}");
                 return Problem("Não foi possível completar a solicitação");
             }
         }
@@ -57,7 +59,7 @@ namespace CostumersAPI.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Exception while saving new costumer: {e.Message}");
+                _logger.LogError($"Exception while fetching custumer {id}: {e.Message}");
                 return Problem($"Não foi possível completar solicitação");
             }
         }
@@ -78,7 +80,7 @@ namespace CostumersAPI.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Exception while saving new costumer: {e.Message}");
+                _logger.LogError($"Exception while fetching customers: {e.Message}");
                 return Problem($"Não foi possível completar solicitação");
             }
         }
@@ -91,6 +93,7 @@ namespace CostumersAPI.Controllers
             try
             {
                 _costumerService.DeleteCustomer(id);
+                _logger.LogWarning($"Cliente {id} removido");
                 return Ok("Cliente removido com sucesso");
             }
             catch (ArgumentOutOfRangeException e)
@@ -107,6 +110,7 @@ namespace CostumersAPI.Controllers
             try
             {
                 _costumerService.PutCustomer(id, customer);
+                _logger.LogWarning($"Cliente {id} atualizado.");
                 return Ok("Cliente atualizado com sucesso");
             }
             catch (ArgumentOutOfRangeException e)
