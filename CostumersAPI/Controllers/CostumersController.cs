@@ -28,7 +28,7 @@ namespace CostumersAPI.Controllers
         {
             try
             {
-                int idNewCustomer = _costumerService.ProcessNewCustomer(costumer);
+                var idNewCustomer = _costumerService.ProcessNewCustomer(costumer); 
                 return CreatedAtAction(nameof(GetCostumer), new { id = idNewCustomer }, costumer);
             }
             catch (ValidationException e)
