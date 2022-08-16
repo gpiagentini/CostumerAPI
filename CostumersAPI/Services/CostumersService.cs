@@ -2,6 +2,7 @@
 using CostumersAPI.Costumer;
 using CostumersAPI.Validations;
 using FluentValidation;
+using System.Reflection;
 
 namespace CostumersAPI.Services
 {
@@ -9,25 +10,79 @@ namespace CostumersAPI.Services
     {
         private List<CostumerBase> _inMemoryCostumers = new List<CostumerBase>();
 
-        public void ProcessNewCostumer(CostumerBase costumer)
+        public int ProcessNewCustomer(CostumerBase costumer)
         {
             _validateIncomingCustomer(costumer);
-            _saveNewCostumer(costumer);
+            return _saveNewCostumer(costumer);
         }
 
-        private void _saveNewCostumer(CostumerBase costumer)
+        public CostumerBase GetCustomer(int id)
         {
-            Console.WriteLine("Save new costumer in memory");
-            _inMemoryCostumers.Add(costumer);
+            try
+            {
+                return _inMemoryCostumers.ElementAt(id);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                throw e;
+            }
         }
 
-        private bool _validateIncomingCustomer(CostumerBase costumer)
+        public List<CostumerBase> GetAllCustomers()
+        {
+            return _inMemoryCostumers;
+        }
+
+        public void DeleteCustomer(int id)
+        {
+            try
+            {
+                _inMemoryCostumers.RemoveAt(id);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                throw e;
+            }
+        }
+
+        public void PutCustomer(int id, CostumerBase customer)
+        {
+            _validatePutCustomer(customer);
+            try
+            {
+                _inMemoryCostumers[id] = customer;
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                throw e;
+            }
+        }
+
+        private int _saveNewCostumer(CostumerBase costumer)
+        {
+            _inMemoryCostumers.Add(costumer);
+            return _inMemoryCostumers.Count - 1;
+        }
+
+        private void _validateIncomingCustomer(CostumerBase costumer)
         {
             var costumerValidator = new NewCustomersValidator();
             try
             {
                 costumerValidator.ValidateAndThrow(costumer);
-                return true;
+            }
+            catch (ValidationException e)
+            {
+                throw e;
+            }
+        }
+
+        private void _validatePutCustomer(CostumerBase costumer)
+        {
+            var costumerValidator = new PutCustomerValidation();
+            try
+            {
+                costumerValidator.ValidateAndThrow(costumer);
             }
             catch (ValidationException e)
             {
