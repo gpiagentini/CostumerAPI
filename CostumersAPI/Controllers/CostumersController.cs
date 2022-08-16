@@ -38,7 +38,7 @@ namespace CostumersAPI.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"Exception while saving new costumer: {e.Message}");
-                return Problem("Não foi possível completar a solicitação");
+                return Problem("NÃ£o foi possÃ­vel completar a solicitaÃ§Ã£o");
             }
         }
 
@@ -50,7 +50,7 @@ namespace CostumersAPI.Controllers
         {
             try
             {
-                CostumerBase costumer = _costumerService.GetCustomer(id);
+                var costumer = _costumerService.GetCustomer(id);
                 return Ok(costumer);
             }
             catch (ArgumentOutOfRangeException e)
@@ -60,7 +60,7 @@ namespace CostumersAPI.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"Exception while fetching custumer {id}: {e.Message}");
-                return Problem($"Não foi possível completar solicitação");
+                return Problem($"NÃ£o foi possÃ­vel completar solicitaÃ§Ã£o");
             }
         }
 
@@ -81,7 +81,7 @@ namespace CostumersAPI.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"Exception while fetching customers: {e.Message}");
-                return Problem($"Não foi possível completar solicitação");
+                return Problem($"NÃ£o foi possÃ­vel completar solicitaÃ§Ã£o");
             }
         }
 
@@ -115,7 +115,7 @@ namespace CostumersAPI.Controllers
             }
             catch (ArgumentOutOfRangeException e)
             {
-                return NotFound($"Não foi possível atualizar o cliente de ID: {id}");
+                return NotFound($"NÃ£o foi possÃ­vel atualizar o cliente de ID: {id}");
             }
             catch (ValidationException e)
             {
