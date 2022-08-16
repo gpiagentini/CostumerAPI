@@ -94,7 +94,7 @@ namespace CostumersAPI.Controllers
             {
                 _costumerService.DeleteCustomer(id);
                 _logger.LogWarning($"Cliente {id} removido");
-                return Ok("Cliente removido com sucesso");
+                return NoContent();
             }
             catch (ArgumentOutOfRangeException e)
             {
