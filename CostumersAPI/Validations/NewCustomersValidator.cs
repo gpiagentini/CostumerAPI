@@ -1,6 +1,8 @@
-﻿using FluentValidation;
+﻿using System.Text.RegularExpressions;
+using FluentValidation;
 using CostumersAPI.Costumer;
 using FluentValidation.Validators;
+using CostumersAPI.CustomExtensions;
 
 namespace CostumersAPI.Validations
 {
@@ -9,45 +11,36 @@ namespace CostumersAPI.Validations
         public NewCustomersValidator()
         {
             RuleFor(costumer => costumer.FullName)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Nome completo\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Nome completo\"");
             RuleFor(costumer => costumer.Email)
-                .NotEmpty()
-                .EmailAddress(EmailValidationMode.Net4xRegex)
-                .WithMessage("Favor especificar o campo \"Email\" válido");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Email\"")
+                .EmailAddress(EmailValidationMode.Net4xRegex).WithMessage("Favor especificar em e-mail válido");
             RuleFor(costumer => costumer.Cpf)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Cpf\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Cpf\"")
+                .Must(cpf => cpf.IsValidCPF()).WithMessage("Cpf especificado não é válido");
             RuleFor(costumer => costumer.Cellphone)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Celular\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Celular\"")
+                .Must(cellphone => cellphone.IsValidCellphone()).WithMessage("Celular informado é inválido");
             RuleFor(costumer => costumer.Birthdate)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Data de Nascimento\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Data de Nascimento\"")
+                .Must(birthdate => birthdate.GetAge() >= 18).WithMessage("Necessário ter mais de 18 anos");
             RuleFor(costumer => costumer.EmailSms)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Email e SMS\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Email e SMS\"");
             RuleFor(costumer => costumer.Whatsapp)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Whatsapp\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Whatsapp\"");
             RuleFor(costumer => costumer.Country)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"País\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"País\"");
             RuleFor(costumer => costumer.City)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Cidade\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Cidade\"");
             RuleFor(costumer => costumer.PostalCode)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Cep\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Cep\"")
+                .Must(postalCode => postalCode.IsValidPostalCode()).WithMessage("Cep informado é inválido");
             RuleFor(costumer => costumer.Address)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Endereço\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Endereço\"");
             RuleFor(costumer => costumer.Number)
-                .NotEmpty()
-                .WithMessage("Favor especificar o campo \"Número\"");
+                .NotEmpty().WithMessage("Favor especificar o campo \"Número\"");
             RuleFor(costumer => costumer)
-                .Must(costumer => costumer.EmailConfirmation.Equals(costumer.Email))
-                .WithMessage("Confirmação de Email divergente");
+                .Must(costumer => costumer.EmailConfirmation.Equals(costumer.Email)).WithMessage("Confirmação de Email divergente");
         }
     }
 }
