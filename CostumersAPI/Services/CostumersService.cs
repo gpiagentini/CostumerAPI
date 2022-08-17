@@ -8,6 +8,13 @@ namespace CostumersAPI.Services
 {
     public class CostumersService : ICostumerService
     {
+        private readonly IValidator<CostumerBase> _validator;
+        public CostumersService(IValidator<CostumerBase> validator)
+        {
+            if (validator != null)
+                _validator = validator;
+        }
+
         private List<CostumerBase> _inMemoryCostumers = new List<CostumerBase>();
 
         public int ProcessNewCustomer(CostumerBase costumer)
@@ -66,10 +73,13 @@ namespace CostumersAPI.Services
 
         private void _validateIncomingCustomer(CostumerBase costumer)
         {
-            var costumerValidator = new NewCustomersValidator();
             try
             {
-                costumerValidator.ValidateAndThrow(costumer);
+                _validator.Validate(costumer, options =>
+                {
+                    options.IncludeRuleSets("NewCustomer").IncludeRulesNotInRuleSet();
+                    options.ThrowOnFailures();
+                });
             }
             catch (ValidationException e)
             {
@@ -79,10 +89,9 @@ namespace CostumersAPI.Services
 
         private void _validatePutCustomer(CostumerBase costumer)
         {
-            var costumerValidator = new PutCustomerValidation();
             try
             {
-                costumerValidator.ValidateAndThrow(costumer);
+                _validator.ValidateAndThrow(costumer);
             }
             catch (ValidationException e)
             {

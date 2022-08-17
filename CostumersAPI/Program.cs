@@ -1,5 +1,8 @@
 using CostumersAPI.Services.Interfaces;
 using CostumersAPI.Services;
+using CostumersAPI.Costumer;
+using CostumersAPI.Validations;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IValidator<CostumerBase>, NewCustomersValidator>();
 builder.Services.AddSingleton<ICostumerService, CostumersService>();
 
 var app = builder.Build();
