@@ -17,15 +17,15 @@ namespace CostumersAPI.CustomExtensions
                 var secondDigitChecker = 0;
                 for (var i = 0; i < mainDigits.Length; i++)
                 {
-                    firstDigitChecker += mainDigits.GetIntFromIndex(i) * (i + 1);
+                    firstDigitChecker += mainDigits.GetIntFromIndex(i) * (10 - i);
                 }
-                firstDigitChecker = firstDigitChecker % 10 == 10 ? 0 : firstDigitChecker % 10;
+                firstDigitChecker = firstDigitChecker % 11 < 2 ? 0 : 11 - (firstDigitChecker % 11);
                 mainDigits = mainDigits + firstDigitChecker.ToString();
                 for (var i = 0; i < mainDigits.Length; i++)
                 {
-                    secondDigitChecker += mainDigits.GetIntFromIndex(i) * i;
+                    secondDigitChecker += mainDigits.GetIntFromIndex(i) * (11 - i);
                 }
-                secondDigitChecker = secondDigitChecker % 11 == 10 ? 0 : secondDigitChecker % 11;
+                secondDigitChecker = secondDigitChecker % 11 < 2 ? 0 : 11 - (secondDigitChecker % 11);
                 var digitCheckerValidation = document.GetIntFromIndex(9).Equals(firstDigitChecker) && document.GetIntFromIndex(10).Equals(secondDigitChecker);
                 return digitCheckerValidation;
             }
