@@ -39,12 +39,9 @@ namespace CostumersAPI.Validations
                 .NotEmpty().WithMessage("Favor especificar o campo \"Endereço\"");
             RuleFor(costumer => costumer.Number)
                 .NotEmpty().WithMessage("Favor especificar o campo \"Número\"");
+            RuleFor(costumer => costumer)
+            .Must(costumer => costumer.EmailConfirmation.Equals(costumer.Email)).WithMessage("Confirmação de Email divergente");
 
-            RuleSet("NewCustomer", () =>
-            {
-                RuleFor(costumer => costumer)
-                .Must(costumer => costumer.EmailConfirmation.Equals(costumer.Email)).WithMessage("Confirmação de Email divergente");
-            });
 
         }
     }
