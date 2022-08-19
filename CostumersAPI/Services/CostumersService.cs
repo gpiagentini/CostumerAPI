@@ -19,7 +19,6 @@ namespace CostumersAPI.Services
 
         public int ProcessNewCustomer(CostumerBase costumer)
         {
-            //_validateIncomingCustomer(costumer);
             return _saveNewCostumer(costumer);
         }
 
@@ -54,7 +53,6 @@ namespace CostumersAPI.Services
 
         public void PutCustomer(int id, CostumerBase customer)
         {
-            //_validatePutCustomer(customer);
             try
             {
                 _inMemoryCostumers[id] = customer;
@@ -71,32 +69,5 @@ namespace CostumersAPI.Services
             return _inMemoryCostumers.Count - 1;
         }
 
-        //private void _validateIncomingCustomer(CostumerBase costumer)
-        //{
-        //    try
-        //    {
-        //        _validator.Validate(costumer, options => 
-        //        {
-        //            options.IncludeRuleSets("NewCustomer").IncludeRulesNotInRuleSet();
-        //            options.ThrowOnFailures();
-        //        });
-        //    }
-        //    catch (ValidationException e)
-        //    {
-        //        throw e;
-        //    }
-        //}
-
-        //private void _validatePutCustomer(CostumerBase costumer)
-        //{
-        //    try
-        //    {
-        //        _validator.ValidateAndThrow(costumer);
-        //    }
-        //    catch (ValidationException e)
-        //    {
-        //        throw e;
-        //    }
-        //}
     }
 }

@@ -4,7 +4,20 @@ namespace CostumersAPI.Costumer
 {
     public class CostumerBase
     {
-        public CostumerBase(string fullName, string email, string cpf, string cellphone, DateTime birthdate, bool emailSms, bool whatsapp, string country, string city, string postalCode, string address, int number, string emailConfirmation)
+        public CostumerBase(
+            string fullName,
+            string email,
+            string cpf,
+            string cellphone,
+            DateTime birthdate,
+            bool emailSms,
+            bool whatsapp,
+            string country,
+            string city,
+            string postalCode,
+            string address,
+            int number,
+            string emailConfirmation)
         {
             FullName = fullName;
             Email = email;
@@ -20,7 +33,6 @@ namespace CostumersAPI.Costumer
             Number = number;
             EmailConfirmation = emailConfirmation;
         }
-
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Cpf { get; set; }
@@ -31,7 +43,7 @@ namespace CostumersAPI.Costumer
         public string Country { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
-        public string Address { get; set;}
+        public string Address { get; set; }
         public int Number { get; set; }
         public string EmailConfirmation { get; set; }
     }
