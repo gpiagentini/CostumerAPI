@@ -9,13 +9,6 @@ namespace CostumersAPI.Services
 {
     public class CostumersService : ICostumerService
     {
-        private readonly IValidator<CostumerBase> _validator;
-        public CostumersService(IValidator<CostumerBase> validator)
-        {
-            if (validator != null)
-                _validator = validator;
-        }
-
         private List<CostumerBase> _inMemoryCostumers = new List<CostumerBase>();
 
         public int ProcessNewCustomer(CostumerBase costumer)
