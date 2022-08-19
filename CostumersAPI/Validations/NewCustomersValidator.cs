@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using FluentValidation;
+﻿using FluentValidation;
 using CostumersAPI.Costumer;
 using FluentValidation.Validators;
 using CostumersAPI.CustomExtensions;

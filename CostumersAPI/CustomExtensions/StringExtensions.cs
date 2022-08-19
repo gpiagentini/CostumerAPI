@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace CostumersAPI.CustomExtensions
 {
@@ -49,9 +50,9 @@ namespace CostumersAPI.CustomExtensions
         {
             try
             {
-                return (int)Char.GetNumericValue(text[index]);
+                return (int) Char.GetNumericValue(text[index]);
             }
-            catch (IndexOutOfRangeException e)
+            catch (IndexOutOfRangeException)
             {
                 return -1;
             }

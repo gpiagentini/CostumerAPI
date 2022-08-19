@@ -1,4 +1,5 @@
 ﻿using CostumersAPI.Costumer;
+using System.Collections.Generic;
 
 namespace CostumersAPI.Services.Interfaces
 {

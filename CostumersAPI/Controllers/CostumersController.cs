@@ -1,7 +1,10 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using CostumersAPI.Costumer;
 using CostumersAPI.Services.Interfaces;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace CostumersAPI.Controllers
 {
@@ -53,7 +56,7 @@ namespace CostumersAPI.Controllers
                 var costumer = _costumerService.GetCustomer(id);
                 return Ok(costumer);
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 return NotFound($"Nenhum cliente encontrado com o ID: {id}");
             }
@@ -96,7 +99,7 @@ namespace CostumersAPI.Controllers
                 _logger.LogWarning($"Cliente {id} removido");
                 return NoContent();
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 return NotFound($"Nenhum recurso encontrado com o ID: {id}");
             }
@@ -113,7 +116,7 @@ namespace CostumersAPI.Controllers
                 _logger.LogWarning($"Cliente {id} atualizado.");
                 return Ok("Cliente atualizado com sucesso");
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 return NotFound($"Não foi possível atualizar o cliente de ID: {id}");
             }

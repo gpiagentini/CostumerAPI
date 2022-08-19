@@ -1,4 +1,5 @@
-﻿namespace CostumersAPI.CustomExtensions
+﻿using System;
+namespace CostumersAPI.CustomExtensions
 {
     public static class DateTimeExtensions
     {

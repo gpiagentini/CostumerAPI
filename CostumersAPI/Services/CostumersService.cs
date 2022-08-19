@@ -1,8 +1,9 @@
 ﻿using CostumersAPI.Services.Interfaces;
 using CostumersAPI.Costumer;
-using CostumersAPI.Validations;
 using FluentValidation;
-using System.Reflection;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace CostumersAPI.Services
 {
