@@ -1,25 +1,26 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
-using CostumersAPI.Costumer;
-using CostumersAPI.Services.Interfaces;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using DomainModels;
+using AppServices.Interfaces;
 
 namespace CostumersAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CostumersController : ControllerBase
+    public class CustomersController : ControllerBase
     {
-        private readonly ICostumerService _costumerService;
-        private readonly ILogger<CostumersController> _logger;
+        private readonly ICustomerService _customerService;
+        private readonly ILogger<CustomersController> _logger;
 
-        public CostumersController(ICostumerService costumerService, ILogger<CostumersController> logger)
+        public CustomersController(
+            ICustomerService customerService,
+            ILogger<CustomersController> logger)
         {
-            if (costumerService != null)
-                _costumerService = costumerService;
-            _logger = logger;
+            _customerService = customerService ?? throw new ArgumentNullException(nameof(CustomersController));
+            _logger = logger ?? throw new ArgumentNullException(nameof(CustomersController));
         }
 
         [HttpPost]
@@ -27,11 +28,12 @@ namespace CostumersAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult PostNewCostumer(CostumerBase costumer)
+        public IActionResult PostNewCostumer(CustomerBase costumer)
         {
             try
             {
-                var idNewCustomer = _costumerService.ProcessNewCustomer(costumer); 
+                Console.WriteLine("Salve");
+                var idNewCustomer = _customerService.ProcessNewCustomer(costumer);
                 return CreatedAtAction(nameof(GetCostumer), new { id = idNewCustomer }, costumer);
             }
             catch (ValidationException e)
@@ -46,19 +48,17 @@ namespace CostumersAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "customer")]
-        [ProducesResponseType(typeof(CostumerBase), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         public IActionResult GetCostumer(int id)
         {
             try
             {
-                var costumer = _costumerService.GetCustomer(id);
-                return Ok(costumer);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                return NotFound($"Nenhum cliente encontrado com o ID: {id}");
+                var customer = _customerService.GetSingleCustomer(id);
+                if(customer == null)
+                    return NotFound($"Nenhum cliente encontrado com o ID: {id}");
+                return Ok(customer);
             }
             catch (Exception e)
             {
@@ -68,14 +68,14 @@ namespace CostumersAPI.Controllers
         }
 
         [HttpGet(Name = "customers")]
-        [ProducesResponseType(typeof(CostumerBase), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         public IActionResult GetAllCostumers()
         {
             try
             {
-                var costumers = _costumerService.GetAllCustomers();
+                var costumers = _customerService.GetAllCustomers();
                 if (costumers.Count == 0)
                     return NotFound("Nenhum Cliente encontrado!");
                 else
@@ -95,7 +95,7 @@ namespace CostumersAPI.Controllers
         {
             try
             {
-                _costumerService.DeleteCustomer(id);
+                _customerService.DeleteCustomer(id);
                 _logger.LogWarning($"Cliente {id} removido");
                 return NoContent();
             }
@@ -108,17 +108,17 @@ namespace CostumersAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-        public IActionResult PutCustomer(int id, CostumerBase customer)
+        public IActionResult PutCustomer(int id, CustomerBase customer)
         {
             try
             {
-                _costumerService.PutCustomer(id, customer);
+                _customerService.UpdateCustomer(id, customer);
                 _logger.LogWarning($"Cliente {id} atualizado.");
                 return Ok("Cliente atualizado com sucesso");
             }
             catch (ArgumentOutOfRangeException)
             {
-                return NotFound($"Não foi possível atualizar o cliente de ID: {id}");
+                return NotFound($"Nenhum recurso encontrado com o ID: {id}");
             }
             catch (ValidationException e)
             {

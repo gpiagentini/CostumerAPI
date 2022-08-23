@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using CostumersAPI.Costumer;
 using FluentValidation.Validators;
-using CostumersAPI.CustomExtensions;
+using AppServices.CustomExtensions;
+using DomainModels;
 
-namespace CostumersAPI.Validations
+namespace AppServices.Validations
 {
-    public class NewCustomersValidator : AbstractValidator<CostumerBase>
+    public class NewCustomersValidator : AbstractValidator<CustomerBase>
     {
         public NewCustomersValidator()
         {

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace CostumersAPI.CustomExtensions
+namespace AppServices.CustomExtensions
 {
     public static class DateTimeExtensions
     {
