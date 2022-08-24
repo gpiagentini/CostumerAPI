@@ -7,8 +7,8 @@ namespace CostumersAPI.CustomExtensions
     {
         public static bool IsValidCPF(this string document)
         {
-            var documentValidator = new Regex(@"^\d{3}\.?\d{3}\.?\d{3}\-?\d{2}$");
             if (document == null) return false;
+            var documentValidator = new Regex(@"^\d{3}\.?\d{3}\.?\d{3}\-?\d{2}$");
             if (!documentValidator.IsMatch(document)) return false;
             else
             {
