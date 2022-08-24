@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using DomainModels;
 using AppServices.Interfaces;
 
-namespace CostumersAPI.Controllers
+namespace CustomersAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -28,13 +28,12 @@ namespace CostumersAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult PostNewCostumer(CustomerBase costumer)
+        public IActionResult PostNewCustomer(CustomerBase customer)
         {
             try
             {
-                Console.WriteLine("Salve");
-                var idNewCustomer = _customerService.ProcessNewCustomer(costumer);
-                return CreatedAtAction(nameof(GetCostumer), new { id = idNewCustomer }, costumer);
+                var idNewCustomer = _customerService.ProcessNewCustomer(customer);
+                return CreatedAtAction(nameof(GetCustomer), new { id = idNewCustomer }, customer);
             }
             catch (ValidationException e)
             {
@@ -42,7 +41,7 @@ namespace CostumersAPI.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Exception while saving new costumer: {e.Message}");
+                _logger.LogError($"Exception while saving new customer: {e.Message}");
                 return Problem("Não foi possível completar a solicitação");
             }
         }
@@ -51,7 +50,7 @@ namespace CostumersAPI.Controllers
         [ProducesResponseType(typeof(CustomerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult GetCostumer(int id)
+        public IActionResult GetCustomer(int id)
         {
             try
             {
@@ -71,15 +70,15 @@ namespace CostumersAPI.Controllers
         [ProducesResponseType(typeof(CustomerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult GetAllCostumers()
+        public IActionResult GetAllCustomers()
         {
             try
             {
-                var costumers = _customerService.GetAllCustomers();
-                if (costumers.Count == 0)
+                var customers = _customerService.GetAllCustomers();
+                if (customers.Count == 0)
                     return NotFound("Nenhum Cliente encontrado!");
                 else
-                    return Ok(costumers);
+                    return Ok(customers);
             }
             catch (Exception e)
             {
