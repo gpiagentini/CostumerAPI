@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AppServices.Interfaces
 {
-    public interface ICustomerService
+    public interface ICustomerAppService
     {
         int ProcessNewCustomer(CustomerBase customer);
         CustomerBase GetSingleCustomer(int id);

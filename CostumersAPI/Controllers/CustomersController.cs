@@ -28,7 +28,7 @@ namespace CustomersAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult PostNewCustomer(CustomerBase customer)
+        public IActionResult Post(CustomerBase customer)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace CustomersAPI.Controllers
         [ProducesResponseType(typeof(CustomerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult GetCustomer(int id)
+        public IActionResult Get(int id)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace CustomersAPI.Controllers
         [ProducesResponseType(typeof(CustomerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult GetAllCustomers()
+        public IActionResult GetAll()
         {
             try
             {
@@ -87,7 +87,7 @@ namespace CustomersAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-        public IActionResult DeleteCustomer(int id)
+        public IActionResult Delete(int id)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace CustomersAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-        public IActionResult PutCustomer(int id, CustomerBase customer)
+        public IActionResult Put(int id, CustomerBase customer)
         {
             try
             {
