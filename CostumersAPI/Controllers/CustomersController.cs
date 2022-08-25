@@ -75,10 +75,7 @@ namespace CustomersAPI.Controllers
             try
             {
                 var customers = _customerService.GetAllCustomers();
-                if (customers.Count == 0)
-                    return NotFound("Nenhum Cliente encontrado!");
-                else
-                    return Ok(customers);
+                return customers.Count == 0 ? Ok(customers) : NotFound("Nenhum Cliente encontrado!");
             }
             catch (Exception e)
             {
