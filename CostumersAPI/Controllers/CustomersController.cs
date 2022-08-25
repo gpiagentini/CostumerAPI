@@ -19,8 +19,8 @@ namespace CustomersAPI.Controllers
             ICustomerService customerService,
             ILogger<CustomersController> logger)
         {
-            _customerService = customerService ?? throw new ArgumentNullException(nameof(CustomersController));
-            _logger = logger ?? throw new ArgumentNullException(nameof(CustomersController));
+            _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpPost]
@@ -41,7 +41,7 @@ namespace CustomersAPI.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Exception while saving new customer: {e.Message}");
+                _logger.LogError(e, "Error occurred while trying to save new customer.");
                 return Problem("Não foi possível completar a solicitação");
             }
         }
@@ -55,14 +55,14 @@ namespace CustomersAPI.Controllers
             try
             {
                 var customer = _customerService.GetSingleCustomer(id);
-                if(customer == null)
+                if (customer == null)
                     return NotFound($"Nenhum cliente encontrado com o ID: {id}");
                 return Ok(customer);
             }
             catch (Exception e)
             {
-                _logger.LogError($"Exception while fetching custumer {id}: {e.Message}");
-                return Problem($"Não foi possível completar solicitação");
+                _logger.LogError(e, "Error occurred while trying to fetch customer {id}.", id);
+                return Problem("Não foi possível completar solicitação.");
             }
         }
 
@@ -82,7 +82,7 @@ namespace CustomersAPI.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Exception while fetching customers: {e.Message}");
+                _logger.LogError(e, "Error occurred while trying to fetch all customers.");
                 return Problem($"Não foi possível completar solicitação");
             }
         }
@@ -95,7 +95,7 @@ namespace CustomersAPI.Controllers
             try
             {
                 _customerService.DeleteCustomer(id);
-                _logger.LogWarning($"Cliente {id} removido");
+                _logger.LogWarning("Customer deleted for Id: {id}", id);
                 return NoContent();
             }
             catch (ArgumentOutOfRangeException)
@@ -112,7 +112,7 @@ namespace CustomersAPI.Controllers
             try
             {
                 _customerService.UpdateCustomer(id, customer);
-                _logger.LogWarning($"Cliente {id} atualizado.");
+                _logger.LogWarning("Customer updated for Id: {id}", id);
                 return Ok("Cliente atualizado com sucesso");
             }
             catch (ArgumentOutOfRangeException)

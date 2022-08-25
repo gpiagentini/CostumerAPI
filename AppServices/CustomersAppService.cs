@@ -12,7 +12,7 @@ namespace AppServices
 
         public CustomersAppService(ICustomerRepository customerRepository)
         {
-            _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(CustomersAppService));
+            _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
         }
 
         public int ProcessNewCustomer(CustomerBase costumer)
