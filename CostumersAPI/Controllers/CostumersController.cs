@@ -68,14 +68,14 @@ namespace CostumersAPI.Controllers
 
         [HttpGet(Name = "customers")]
         [ProducesResponseType(typeof(CostumerBase), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         public IActionResult GetAllCostumers()
         {
             try
             {
                 var costumers = _costumerService.GetAllCustomers();
-                return costumers.Count == 0 ? NotFound("Nenhum Cliente encontrado!") : Ok(costumers); 
+                return costumers.Count == 0 ? NoContent() : Ok(costumers); 
             }
             catch (Exception e)
             {

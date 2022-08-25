@@ -18,14 +18,7 @@ namespace CostumersAPI.Services
 
         public CostumerBase GetCustomer(int id)
         {
-            try
-            {
-                return _inMemoryCostumers.ElementAt(id);
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                throw e;
-            }
+            return _inMemoryCostumers.ElementAt(id);
         }
 
         public List<CostumerBase> GetAllCustomers()
@@ -35,26 +28,12 @@ namespace CostumersAPI.Services
 
         public void DeleteCustomer(int id)
         {
-            try
-            {
-                _inMemoryCostumers.RemoveAt(id);
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                throw e;
-            }
+            _inMemoryCostumers.RemoveAt(id);
         }
 
         public void PutCustomer(int id, CostumerBase customer)
         {
-            try
-            {
-                _inMemoryCostumers[id] = customer;
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                throw e;
-            }
+            _inMemoryCostumers[id] = customer;
         }
 
         private int _saveNewCostumer(CostumerBase costumer)
