@@ -92,7 +92,6 @@ namespace CostumersAPI.Controllers
             try
             {
                 _costumerService.DeleteCustomer(id);
-                _logger.LogWarning("Customer deleted for Id: {id}", id);
                 return NoContent();
             }
             catch (ArgumentOutOfRangeException)
@@ -109,7 +108,6 @@ namespace CostumersAPI.Controllers
             try
             {
                 _costumerService.PutCustomer(id, customer);
-                _logger.LogWarning("Customer updated for Id: {id}", id);
                 return Ok("Cliente atualizado com sucesso");
             }
             catch (ArgumentOutOfRangeException)
