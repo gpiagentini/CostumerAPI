@@ -9,10 +9,10 @@ namespace AppServices.Interfaces
 {
     public interface ICustomerAppService
     {
-        int ProcessNewCustomer(CustomerBase customer);
-        CustomerBase GetSingleCustomer(int id);
-        List<CustomerBase> GetAllCustomers();
-        void DeleteCustomer(int id);
-        void UpdateCustomer(int id, CustomerBase customer);
+        int Add(CustomerBase customer);
+        CustomerBase Get(int id);
+        List<CustomerBase> GetAll();
+        void Delete(int id);
+        void Update(int id, CustomerBase customer);
     }
 }

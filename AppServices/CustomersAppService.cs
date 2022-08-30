@@ -6,7 +6,7 @@ using DomainModels.Interfaces;
 
 namespace AppServices
 {
-    public class CustomersAppService : ICustomerService
+    public class CustomersAppService : ICustomerAppService
     {
         private readonly ICustomerRepository _customerRepository;
 
@@ -15,27 +15,27 @@ namespace AppServices
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
         }
 
-        public int ProcessNewCustomer(CustomerBase costumer)
+        public int Add(CustomerBase costumer)
         {
             return _customerRepository.CreateNew(costumer);
         }
 
-        public CustomerBase GetSingleCustomer(int id)
+        public CustomerBase Get(int id)
         {
             return _customerRepository.GetById(id);
         }
 
-        public List<CustomerBase> GetAllCustomers()
+        public List<CustomerBase> GetAll()
         {
             return _customerRepository.GetAll();
         }
 
-        public void DeleteCustomer(int id)
+        public void Delete(int id)
         {
             _customerRepository.Remove(id);
         }
 
-        public void UpdateCustomer(int id, CustomerBase customer)
+        public void Update(int id, CustomerBase customer)
         {
             _customerRepository.Update(id, customer);
         }

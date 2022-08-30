@@ -12,11 +12,11 @@ namespace CustomersAPI.Controllers
     [Route("[controller]")]
     public class CustomersController : ControllerBase
     {
-        private readonly ICustomerService _customerService;
+        private readonly ICustomerAppService _customerService;
         private readonly ILogger<CustomersController> _logger;
 
         public CustomersController(
-            ICustomerService customerService,
+            ICustomerAppService customerService,
             ILogger<CustomersController> logger)
         {
             _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
@@ -32,8 +32,8 @@ namespace CustomersAPI.Controllers
         {
             try
             {
-                var idNewCustomer = _customerService.ProcessNewCustomer(customer);
-                return CreatedAtAction(nameof(GetCustomer), new { id = idNewCustomer }, customer);
+                var idNewCustomer = _customerService.Add(customer);
+                return CreatedAtAction(nameof(Get), new { id = idNewCustomer }, customer);
             }
             catch (ValidationException e)
             {
@@ -54,7 +54,7 @@ namespace CustomersAPI.Controllers
         {
             try
             {
-                var customer = _customerService.GetSingleCustomer(id);
+                var customer = _customerService.Get(id);
                 if (customer == null)
                     return NotFound($"Nenhum cliente encontrado com o ID: {id}");
                 return Ok(customer);
@@ -74,7 +74,7 @@ namespace CustomersAPI.Controllers
         {
             try
             {
-                var customers = _customerService.GetAllCustomers();
+                var customers = _customerService.GetAll();
                 return customers.Count == 0 ? NoContent() : Ok(customers);
             }
             catch (Exception e)
@@ -91,8 +91,7 @@ namespace CustomersAPI.Controllers
         {
             try
             {
-                _customerService.DeleteCustomer(id);
-                _logger.LogWarning("Customer deleted for Id: {id}", id);
+                _customerService.Delete(id);
                 return NoContent();
             }
             catch (ArgumentOutOfRangeException)
@@ -108,8 +107,7 @@ namespace CustomersAPI.Controllers
         {
             try
             {
-                _customerService.UpdateCustomer(id, customer);
-                _logger.LogWarning("Customer updated for Id: {id}", id);
+                _customerService.Update(id, customer);
                 return Ok("Cliente atualizado com sucesso");
             }
             catch (ArgumentOutOfRangeException)
