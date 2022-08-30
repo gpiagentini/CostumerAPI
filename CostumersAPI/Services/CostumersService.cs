@@ -32,7 +32,7 @@ namespace CostumersAPI.Services
             _inMemoryCostumers.RemoveAt(id);
         }
 
-        public void Put(int id, CostumerBase customer)
+        public void Update(int id, CostumerBase customer)
         {
             _inMemoryCostumers[id] = customer;
         }

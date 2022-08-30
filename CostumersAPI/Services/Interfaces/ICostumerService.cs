@@ -9,6 +9,6 @@ namespace CostumersAPI.Services.Interfaces
         CostumerBase Get(int id);
         List<CostumerBase> GetAll();
         void Delete(int id);
-        void Put(int id, CostumerBase customer);
+        void Update(int id, CostumerBase customer);
     }
 }

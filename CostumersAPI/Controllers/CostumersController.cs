@@ -107,7 +107,7 @@ namespace CostumersAPI.Controllers
         {
             try
             {
-                _costumerService.Put(id, customer);
+                _costumerService.Update(id, customer);
                 return Ok("Cliente atualizado com sucesso");
             }
             catch (ArgumentOutOfRangeException)
