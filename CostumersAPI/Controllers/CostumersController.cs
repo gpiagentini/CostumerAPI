@@ -26,12 +26,12 @@ namespace CostumersAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult PostNewCostumer(CostumerBase costumer)
+        public IActionResult Post(CostumerBase costumer)
         {
             try
             {
-                var idNewCustomer = _costumerService.ProcessNewCustomer(costumer);      
-                return CreatedAtAction(nameof(GetCostumer), new { id = idNewCustomer }, costumer);
+                var idNewCustomer = _costumerService.Add(costumer);      
+                return CreatedAtAction(nameof(Get), new { id = idNewCustomer }, costumer);
             }
             catch (ValidationException e)
             {
@@ -48,11 +48,11 @@ namespace CostumersAPI.Controllers
         [ProducesResponseType(typeof(CostumerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult GetCostumer(int id)
+        public IActionResult Get(int id)
         {
             try
             {
-                var costumer = _costumerService.GetCustomer(id);
+                var costumer = _costumerService.Get(id);
                 return Ok(costumer);
             }
             catch (ArgumentOutOfRangeException)
@@ -70,11 +70,11 @@ namespace CostumersAPI.Controllers
         [ProducesResponseType(typeof(CostumerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult GetAllCostumers()
+        public IActionResult GetAll()
         {
             try
             {
-                var costumers = _costumerService.GetAllCustomers();
+                var costumers = _costumerService.GetAll();
                 return costumers.Count == 0 ? NoContent() : Ok(costumers); 
             }
             catch (Exception e)
@@ -87,11 +87,11 @@ namespace CostumersAPI.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-        public IActionResult DeleteCustomer(int id)
+        public IActionResult Delete(int id)
         {
             try
             {
-                _costumerService.DeleteCustomer(id);
+                _costumerService.Delete(id);
                 return NoContent();
             }
             catch (ArgumentOutOfRangeException)
@@ -103,11 +103,11 @@ namespace CostumersAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-        public IActionResult PutCustomer(int id, CostumerBase customer)
+        public IActionResult Put(int id, CostumerBase customer)
         {
             try
             {
-                _costumerService.PutCustomer(id, customer);
+                _costumerService.Put(id, customer);
                 return Ok("Cliente atualizado com sucesso");
             }
             catch (ArgumentOutOfRangeException)
