@@ -9,6 +9,9 @@ using FluentValidation;
 using DomainModels;
 using AppServices.Validations;
 using AppServices.Interfaces;
+using AppServices.Mappers.Customer;
+using AutoMapper;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +23,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ICustomerAppService, CustomersAppService>()
     .AddFluentValidationAutoValidation()
-    .AddScoped<IValidator<CustomerBase>, NewCustomersValidator>()
-    .AddSingleton<ICustomerRepository, CustomerService>();
+    .AddScoped<IValidator<CreateCustomerRequest>, CreateCustomerValidator>()
+    .AddScoped<IValidator<UpdateCustomerRequest>, UpdateCustomerValidator>()
+    .AddSingleton<ICustomerRepository, CustomerService>()
+    .AddAutoMapper(Assembly.Load("AppServices"));
 
 var app = builder.Build();
 

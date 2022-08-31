@@ -3,31 +3,44 @@ using System;
 using DomainModels;
 using AppServices.Interfaces;
 using DomainModels.Interfaces;
+using AppServices.Mappers.Customer;
+using AutoMapper;
 
 namespace AppServices
 {
     public class CustomersAppService : ICustomerAppService
     {
+        private readonly IMapper _mapper;
         private readonly ICustomerRepository _customerRepository;
 
-        public CustomersAppService(ICustomerRepository customerRepository)
+        public CustomersAppService(ICustomerRepository customerRepository, IMapper mapper)
         {
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public int Add(CustomerBase costumer)
+        public int Add(CreateCustomerRequest createCustomerRequest)
         {
-            return _customerRepository.CreateNew(costumer);
+            var customerBase = _mapper.Map<CustomerBase>(createCustomerRequest);
+            return _customerRepository.CreateNew(customerBase);
         }
 
-        public CustomerBase Get(int id)
+        public GetCustomerResponse Get(int id)
         {
-            return _customerRepository.GetById(id);
+            var customerBase = _customerRepository.GetById(id);
+            return _mapper.Map<GetCustomerResponse>(customerBase);
         }
 
-        public List<CustomerBase> GetAll()
+        public List<GetCustomerResponse> GetAll()
         {
-            return _customerRepository.GetAll();
+            var customerBaseList = _customerRepository.GetAll();
+            List<GetCustomerResponse> customerResponseList = new List<GetCustomerResponse>();
+            foreach(var customerBase in customerBaseList)
+            {
+                var customerResponse = _mapper.Map<GetCustomerResponse>(customerBase);
+                customerResponseList.Add(customerResponse);
+            }
+            return customerResponseList;
         }
 
         public void Delete(int id)
@@ -35,9 +48,10 @@ namespace AppServices
             _customerRepository.Remove(id);
         }
 
-        public void Update(int id, CustomerBase customer)
+        public void Update(int id, UpdateCustomerRequest updateCustomerRequest)
         {
-            _customerRepository.Update(id, customer);
+            var customerBase = _mapper.Map<CustomerBase>(updateCustomerRequest);
+            _customerRepository.Update(id, customerBase);
         }
     }
 }

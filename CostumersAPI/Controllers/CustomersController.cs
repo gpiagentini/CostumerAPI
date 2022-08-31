@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using DomainModels;
 using AppServices.Interfaces;
+using AppServices.Mappers.Customer;
 
 namespace CustomersAPI.Controllers
 {
@@ -28,12 +29,12 @@ namespace CustomersAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
-        public IActionResult Post(CustomerBase customer)
+        public IActionResult Post(CreateCustomerRequest customer)
         {
             try
             {
                 var idNewCustomer = _customerService.Add(customer);
-                return CreatedAtAction(nameof(Get), new { id = idNewCustomer }, customer);
+                return CreatedAtRoute(nameof(Get), new { id = idNewCustomer }, customer);
             }
             catch (ValidationException e)
             {
@@ -46,7 +47,7 @@ namespace CustomersAPI.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "customer")]
+        [HttpGet("{id}", Name="Get")]
         [ProducesResponseType(typeof(CustomerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -103,7 +104,7 @@ namespace CustomersAPI.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-        public IActionResult Put(int id, CustomerBase customer)
+        public IActionResult Put(int id, UpdateCustomerRequest customer)
         {
             try
             {

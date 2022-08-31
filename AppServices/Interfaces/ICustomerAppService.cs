@@ -1,4 +1,5 @@
-﻿using DomainModels;
+﻿using AppServices.Mappers.Customer;
+using DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace AppServices.Interfaces
 {
     public interface ICustomerAppService
     {
-        int Add(CustomerBase customer);
-        CustomerBase Get(int id);
-        List<CustomerBase> GetAll();
+        int Add(CreateCustomerRequest customer);
+        GetCustomerResponse Get(int id);
+        List<GetCustomerResponse> GetAll();
         void Delete(int id);
-        void Update(int id, CustomerBase customer);
+        void Update(int id, UpdateCustomerRequest customer);
     }
 }
