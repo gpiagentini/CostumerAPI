@@ -37,6 +37,7 @@ namespace DomainModels
             Number = number;
             EmailConfirmation = emailConfirmation;
         }
+        
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Cpf { get; set; }
