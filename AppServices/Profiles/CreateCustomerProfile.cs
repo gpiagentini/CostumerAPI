@@ -14,7 +14,6 @@ namespace AppServices.Profiles
         public CreateCustomerProfile()
         {
             CreateMap<CreateCustomerRequest, CustomerBase>();
-            CreateMap<CreateCustomerRequest, GetCustomerProfile>();
         }
     }
 }
