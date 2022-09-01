@@ -8,7 +8,6 @@ namespace DomainServices
 {
     public class CustomerService : ICustomerRepository
     {
-
         public List<CustomerBase> _inMemoryCustomers = new List<CustomerBase>();
 
         public int Add(CustomerBase customer)
