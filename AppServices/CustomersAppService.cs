@@ -34,13 +34,7 @@ namespace AppServices
         public List<GetCustomerResponse> GetAll()
         {
             var customerBaseList = _customerRepository.GetAll();
-            List<GetCustomerResponse> customerResponseList = new List<GetCustomerResponse>();
-            foreach(var customerBase in customerBaseList)
-            {
-                var customerResponse = _mapper.Map<GetCustomerResponse>(customerBase);
-                customerResponseList.Add(customerResponse);
-            }
-            return customerResponseList;
+            return _mapper.Map<List<GetCustomerResponse>>(customerBaseList);
         }
 
         public void Delete(int id)
