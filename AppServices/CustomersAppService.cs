@@ -17,7 +17,7 @@ namespace AppServices
 
         public int Add(CustomerBase costumer)
         {
-            return _customerRepository.CreateNew(costumer);
+            return _customerRepository.Add(costumer);
         }
 
         public CustomerBase Get(int id)

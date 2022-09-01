@@ -8,7 +8,7 @@ namespace DomainModels.Interfaces
 {
     public interface ICustomerRepository
     {
-        int CreateNew(CustomerBase customer);
+        int Add(CustomerBase customer);
         CustomerBase GetById(int id);
         List<CustomerBase> GetAll();
         void Remove(int id);
