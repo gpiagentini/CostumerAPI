@@ -1,8 +1,7 @@
-﻿using AppServices.Mappers.Customer;
+﻿using AppServices.CustomExtensions;
+using AppServices.Mappers.Customer;
 using FluentValidation;
 using FluentValidation.Validators;
-using AppServices.CustomExtensions;
-using System;
 
 namespace AppServices.Validations
 {

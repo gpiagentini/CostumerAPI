@@ -1,11 +1,11 @@
-using System;
-using Microsoft.AspNetCore.Mvc;
-using FluentValidation;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http;
-using DomainModels;
 using AppServices.Interfaces;
 using AppServices.Mappers.Customer;
+using DomainModels;
+using FluentValidation;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace CustomersAPI.Controllers
 {

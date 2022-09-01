@@ -1,12 +1,13 @@
-﻿using System;
+﻿using DomainModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainModels.Interfaces
+namespace DomainServices.Interfaces
 {
-    public interface ICustomerRepository
+    public interface ICustomerService
     {
         int CreateNew(CustomerBase customer);
         CustomerBase GetById(int id);

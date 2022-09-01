@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using System;
 using DomainModels;
+using DomainServices;
 using AppServices.Interfaces;
-using DomainModels.Interfaces;
 using AppServices.Mappers.Customer;
 using AutoMapper;
+using DomainServices.Interfaces;
 
 namespace AppServices
 {
     public class CustomersAppService : ICustomerAppService
     {
         private readonly IMapper _mapper;
-        private readonly ICustomerRepository _customerRepository;
+        private readonly ICustomerService _customerRepository;
 
-        public CustomersAppService(ICustomerRepository customerRepository, IMapper mapper)
+        public CustomersAppService(ICustomerService customerRepository, IMapper mapper)
         {
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

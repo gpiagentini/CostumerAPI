@@ -1,16 +1,14 @@
+using AppServices;
+using AppServices.Interfaces;
+using AppServices.Mappers.Customer;
+using AppServices.Validations;
+using DomainServices;
+using DomainServices.Interfaces;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AppServices;
-using DomainModels.Interfaces;
-using DomainServices;
-using FluentValidation;
-using DomainModels;
-using AppServices.Validations;
-using AppServices.Interfaces;
-using AppServices.Mappers.Customer;
-using AutoMapper;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +23,7 @@ builder.Services.AddSingleton<ICustomerAppService, CustomersAppService>()
     .AddFluentValidationAutoValidation()
     .AddScoped<IValidator<CreateCustomerRequest>, CreateCustomerValidator>()
     .AddScoped<IValidator<UpdateCustomerRequest>, UpdateCustomerValidator>()
-    .AddSingleton<ICustomerRepository, CustomerService>()
+    .AddSingleton<ICustomerService, CustomerService>()
     .AddAutoMapper(Assembly.Load("AppServices"));
 
 var app = builder.Build();

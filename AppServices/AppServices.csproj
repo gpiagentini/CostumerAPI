@@ -5,16 +5,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Mappers\Customer\CustomerResponse.cs" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-	  <PackageReference Include="FluentValidation" Version="11.2.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\DomainModels\DomainModels.csproj" />
+		<ProjectReference Include="..\DomainServices\DomainServices.csproj" />
 	</ItemGroup>
 
 </Project>

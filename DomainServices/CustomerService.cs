@@ -1,12 +1,12 @@
 ﻿using DomainModels;
-using DomainModels.Interfaces;
+using DomainServices.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace DomainServices
 {
-    public class CustomerService : ICustomerRepository
+    public class CustomerService : ICustomerService
     {
         public List<CustomerBase> _inMemoryCustomers = new List<CustomerBase>();
 
