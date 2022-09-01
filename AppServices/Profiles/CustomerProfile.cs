@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 
 namespace AppServices.Profiles
 {
-    public class UpdateCustomerProfile : Profile
+    public class CustomerProfile : Profile
     {
-        public UpdateCustomerProfile()
+        public CustomerProfile()
         {
+            CreateMap<CreateCustomerRequest, CustomerBase>();
+            CreateMap<CustomerBase, GetCustomerResponse>();
             CreateMap<UpdateCustomerRequest, CustomerBase>();
         }
     }
