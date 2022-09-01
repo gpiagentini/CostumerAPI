@@ -9,7 +9,7 @@ namespace DomainServices.Interfaces
 {
     public interface ICustomerService
     {
-        int CreateNew(CustomerBase customer);
+        int Add(CustomerBase customer);
         CustomerBase GetById(int id);
         List<CustomerBase> GetAll();
         void Remove(int id);

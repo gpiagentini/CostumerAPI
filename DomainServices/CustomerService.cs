@@ -10,7 +10,7 @@ namespace DomainServices
     {
         public List<CustomerBase> _inMemoryCustomers = new List<CustomerBase>();
 
-        public int CreateNew(CustomerBase customer)
+        public int Add(CustomerBase customer)
         {
             customer.Id = _inMemoryCustomers.LastOrDefault() != null ? _inMemoryCustomers.LastOrDefault().Id + 1 : 1;
             _inMemoryCustomers.Add(customer);

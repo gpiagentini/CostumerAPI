@@ -23,7 +23,7 @@ namespace AppServices
         public int Add(CreateCustomerRequest createCustomerRequest)
         {
             var customerBase = _mapper.Map<CustomerBase>(createCustomerRequest);
-            return _customerRepository.CreateNew(customerBase);
+            return _customerRepository.Add(customerBase);
         }
 
         public GetCustomerResponse Get(int id)
