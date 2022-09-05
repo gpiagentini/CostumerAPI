@@ -9,6 +9,7 @@ using FluentValidation;
 using DomainModels;
 using AppServices.Validations;
 using AppServices.Interfaces;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ICustomerRepository, CustomerService>();
 builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddScoped<IValidator<CustomerBase>, NewCustomersValidator>();
+builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
 
 var app = builder.Build();
 

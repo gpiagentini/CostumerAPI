@@ -5,9 +5,9 @@ using DomainModels;
 
 namespace AppServices.Validations
 {
-    public class NewCustomersValidator : AbstractValidator<CustomerBase>
+    public class NewCustomerValidator : AbstractValidator<CustomerBase>
     {
-        public NewCustomersValidator()
+        public NewCustomerValidator()
         {
             RuleFor(costumer => costumer.FullName)
                 .NotEmpty().WithMessage("Favor especificar o campo \"Nome completo\"");
