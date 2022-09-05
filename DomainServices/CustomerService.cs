@@ -12,7 +12,7 @@ namespace DomainServices
 
         public int Add(CustomerBase customer)
         {
-            customer.Id = _inMemoryCustomers.LastOrDefault() != null ? _inMemoryCustomers.LastOrDefault().Id + 1 : 1;
+            customer.Id = _inMemoryCustomers.Any() ? _inMemoryCustomers.LastOrDefault().Id + 1 : 1;
             _inMemoryCustomers.Add(customer);
             return customer.Id;
         }
