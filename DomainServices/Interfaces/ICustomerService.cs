@@ -9,6 +9,6 @@ namespace DomainServices.Interfaces
         CustomerBase GetById(int id);
         List<CustomerBase> GetAll();
         void Remove(int id);
-        void Update(int id, CustomerBase customer);
+        void Update(CustomerBase customer);
     }
 }

@@ -45,7 +45,8 @@ namespace AppServices
         public void Update(int id, UpdateCustomerRequest updateCustomerRequest)
         {
             var customerBase = _mapper.Map<CustomerBase>(updateCustomerRequest);
-            _customerRepository.Update(id, customerBase);
+            customerBase.Id = id;
+            _customerRepository.Update(customerBase);
         }
     }
 }

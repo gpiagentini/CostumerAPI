@@ -32,8 +32,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
 builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddScoped<IValidator<CreateCustomerRequest>, CreateCustomerValidator>();
-builder.Services.AddScoped<IValidator<UpdateCustomerRequest>, UpdateCustomerValidator>();
+builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
 builder.Services.AddAutoMapper(Assembly.Load("AppServices"));
 
 var app = builder.Build();
