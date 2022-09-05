@@ -8,18 +8,18 @@ namespace DomainServices
 {
     public class CustomerService : ICustomerService
     {
-        public List<CustomerBase> _inMemoryCustomers = new List<CustomerBase>();
+        private readonly List<CustomerBase> _inMemoryCustomers = new();
 
         public int Add(CustomerBase customer)
         {
-            customer.Id = _inMemoryCustomers.LastOrDefault() != null ? _inMemoryCustomers.LastOrDefault().Id + 1 : 1;
+            customer.Id = _inMemoryCustomers.Any() ? _inMemoryCustomers.LastOrDefault().Id + 1 : 1;
             _inMemoryCustomers.Add(customer);
             return customer.Id;
         }
 
         public CustomerBase GetById(int id)
         {
-            return _inMemoryCustomers.Where(customer => customer.Id == id).FirstOrDefault();
+            return _inMemoryCustomers.FirstOrDefault(customer => customer.Id == id);
         }
 
         public List<CustomerBase> GetAll()
@@ -29,21 +29,15 @@ namespace DomainServices
 
         public void Remove(int id)
         {
-            var customerToRemove = _inMemoryCustomers.Where(customer => customer.Id == id).FirstOrDefault();
-            if (customerToRemove == null) throw new ArgumentOutOfRangeException();
+            var customerToRemove = _inMemoryCustomers.FirstOrDefault(customer => customer.Id == id);
+            if (customerToRemove == null) throw new ArgumentException();
             _inMemoryCustomers.Remove(customerToRemove);
         }
 
-        public void Update(int id, CustomerBase updatedCustomer)
+        public void Update(CustomerBase customerToUpdate)
         {
-            var customerToUpdate = _inMemoryCustomers.FirstOrDefault(customer => customer.Id == id);
-            if (customerToUpdate == null) throw new ArgumentOutOfRangeException();
-            else
-            {
-                updatedCustomer.Id = customerToUpdate.Id;
-                var index = _inMemoryCustomers.IndexOf(customerToUpdate);
-                _inMemoryCustomers[index] = updatedCustomer;
-            }
+            var index = _inMemoryCustomers.FindIndex(customer => customer.Id == customerToUpdate.Id);
+            _inMemoryCustomers[index] = customerToUpdate;
         }
     }
 }
