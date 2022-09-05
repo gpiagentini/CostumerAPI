@@ -94,7 +94,7 @@ namespace CustomersAPI.Controllers
                 _customerService.Delete(id);
                 return NoContent();
             }
-            catch (ArgumentOutOfRangeException)
+            catch (ArgumentException)
             {
                 return NotFound($"Nenhum recurso encontrado com o ID: {id}");
             }

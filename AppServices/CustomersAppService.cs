@@ -37,7 +37,8 @@ namespace AppServices
 
         public void Update(int id, CustomerBase customer)
         {
-            _customerRepository.Update(id, customer);
+            customer.Id = id;
+            _customerRepository.Update(customer);
         }
     }
 }

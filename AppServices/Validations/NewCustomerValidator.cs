@@ -51,7 +51,8 @@ namespace AppServices.Validations
                 .NotEmpty().WithMessage("Favor especificar o campo \"Número\"");
 
             RuleFor(costumer => costumer)
-            .Must(costumer => costumer.EmailConfirmation.Equals(costumer.Email)).WithMessage("Confirmação de Email divergente");
+                .NotEmpty().WithMessage("Favor informar a validação do E-mail")
+                .Must(costumer => costumer.EmailConfirmation.Equals(costumer.Email)).WithMessage("Confirmação de Email divergente");
         }
     }
 }
