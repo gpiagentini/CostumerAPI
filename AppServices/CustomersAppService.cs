@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System;
-using DomainModels;
-using DomainServices;
-using AppServices.Interfaces;
+﻿using AppServices.Interfaces;
 using AppServices.Mappers.Customer;
 using AutoMapper;
+using DomainModels;
 using DomainServices.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace AppServices
 {

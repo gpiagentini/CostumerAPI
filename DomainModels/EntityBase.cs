@@ -1,6 +1,6 @@
 ﻿namespace DomainModels
 {
-    public class EntityBase
+    public abstract class EntityBase
     {
         public int Id { get; set; }
     }
