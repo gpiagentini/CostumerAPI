@@ -19,7 +19,7 @@ namespace DomainServices
 
         public CustomerBase GetById(int id)
         {
-            return _inMemoryCustomers.Where(customer => customer.Id == id).FirstOrDefault();
+            return _inMemoryCustomers.FirstOrDefault(customer => customer.Id == id);
         }
 
         public List<CustomerBase> GetAll()
