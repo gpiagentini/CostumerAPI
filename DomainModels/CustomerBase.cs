@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CostumersAPI.Costumer
+namespace DomainModels
 {
-    public class CostumerBase
+    public class CustomerBase: EntityBase
     {
-        public CostumerBase(
+        public CustomerBase(
             string fullName,
             string email,
             string cpf,

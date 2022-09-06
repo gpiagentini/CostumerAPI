@@ -1,24 +1,28 @@
-using CostumersAPI.Services.Interfaces;
-using CostumersAPI.Services;
-using CostumersAPI.Costumer;
-using CostumersAPI.Validations;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AppServices;
+using DomainModels.Interfaces;
+using DomainServices;
+using FluentValidation;
+using DomainModels;
+using AppServices.Validations;
+using AppServices.Interfaces;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<ICostumerService, CostumersService>();
-builder.Services.AddScoped<IValidator<CostumerBase>, NewCustomersValidator>();
+builder.Services.AddSingleton<ICustomerRepository, CustomerService>();
+builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
 
 var app = builder.Build();
 
