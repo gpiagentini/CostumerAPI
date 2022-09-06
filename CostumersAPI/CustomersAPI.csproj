@@ -10,8 +10,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\AppServices\AppServices.csproj" />
-	  <ProjectReference Include="..\Infrastructure.Data\Infrastructure.Data.csproj" />
+		<ProjectReference Include="..\AppServices\AppServices.csproj"/>
 	</ItemGroup>
 
 </Project>
