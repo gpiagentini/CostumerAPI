@@ -1,7 +1,5 @@
 using AppServices;
 using AppServices.Interfaces;
-using AppServices.Mappers.Customer;
-using AppServices.Validations;
 using DomainServices;
 using DomainServices.Interfaces;
 using FluentValidation;
@@ -30,7 +28,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
-builder.Services.AddSingleton<ICustomerService, CustomerService>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
 builder.Services.AddAutoMapper(Assembly.Load("AppServices"));
