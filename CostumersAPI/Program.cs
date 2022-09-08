@@ -1,3 +1,10 @@
+using AppServices;
+using AppServices.Interfaces;
+using AppServices.Mappers.Customer;
+using AppServices.Validations;
+using DomainServices;
+using DomainServices.Interfaces;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

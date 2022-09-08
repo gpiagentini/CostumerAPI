@@ -5,15 +5,10 @@ using AppServices.Mappers.Customer;
 
 namespace AppServices.Validations
 {
-<<<<<<<< HEAD:AppServices/Validations/CreateCustomerValidator.cs
     public class CreateCustomerValidator : AbstractValidator<CreateCustomerRequest>
     {
         public CreateCustomerValidator()
-========
-    public class NewCustomerValidator : AbstractValidator<CustomerBase>
-    {
-        public NewCustomerValidator()
->>>>>>>> main:AppServices/Validations/NewCustomerValidator.cs
+
         {
             RuleFor(costumer => costumer.FullName)
                 .NotEmpty().WithMessage("Favor especificar o campo \"Nome completo\"");
@@ -57,10 +52,6 @@ namespace AppServices.Validations
                 .NotEmpty().WithMessage("Favor especificar o campo \"Número\"");
 
             RuleFor(costumer => costumer)
-<<<<<<<< HEAD:AppServices/Validations/CreateCustomerValidator.cs
-========
-                .NotEmpty().WithMessage("Favor informar a validação do E-mail")
->>>>>>>> main:AppServices/Validations/NewCustomerValidator.cs
                 .Must(costumer => costumer.EmailConfirmation.Equals(costumer.Email)).WithMessage("Confirmação de Email divergente");
         }
     }
