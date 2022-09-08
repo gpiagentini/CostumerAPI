@@ -30,7 +30,7 @@ namespace DomainServices
         public void Remove(int id)
         {
             var customerToRemove = _inMemoryCustomers.FirstOrDefault(customer => customer.Id == id);
-            if (customerToRemove == null) throw new ArgumentException();
+            if (customerToRemove == null) throw new ArgumentException($"Nenhum recurso encontrado com o ID: {id}");
             _inMemoryCustomers.Remove(customerToRemove);
         }
 

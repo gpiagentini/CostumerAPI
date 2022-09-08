@@ -21,6 +21,7 @@ builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
+builder.Services.AddAutoMapper(Assembly.Load("AppServices"));
 
 var app = builder.Build();
 
