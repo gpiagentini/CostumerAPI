@@ -59,15 +59,13 @@ namespace DomainServices
 
         private bool IsCpfUnique(CustomerBase customerToBeValidated)
         {
-            bool isCprfUnique = !_microserviceDbContext.CustomerBase.Any(customer => customer.Cpf.Equals(customerToBeValidated.Cpf) && !customer.Id.Equals(customerToBeValidated.Id));
-            if (!isCprfUnique) throw new CustomerDatabaseValidatorException($"Cpf já cadastrado.");
-            return isCprfUnique;
+            bool isCpfUnique = !_microserviceDbContext.CustomerBase.Any(customer => customer.Cpf.Equals(customerToBeValidated.Cpf) && !customer.Id.Equals(customerToBeValidated.Id));
+            return isCpfUnique;
         }
 
         private bool IsEmailUnique(CustomerBase customerToBeValidated)
         {
             bool isEmailUnique = !_microserviceDbContext.CustomerBase.Any(customer => customer.Email.Equals(customerToBeValidated.Email) && !customer.Id.Equals(customerToBeValidated.Id));
-            if (!isEmailUnique) throw new CustomerDatabaseValidatorException($"Email {customerToBeValidated.Email} já cadastrado.");
             return isEmailUnique;
         }
 
@@ -76,15 +74,9 @@ namespace DomainServices
         /// </exception>
         private bool TryValidateCustomer(CustomerBase customer)
         {
-            try
-            {
-                return IsCpfUnique(customer) && IsEmailUnique(customer);
-            }
-            catch (CustomerDatabaseValidatorException)
-            {
-                throw;
-            }
-
+            if (!IsCpfUnique(customer)) throw new CustomerDatabaseValidatorException($"Cpf já cadastrado.");
+            if (!IsEmailUnique(customer)) throw new CustomerDatabaseValidatorException($"Email {customer.Email} já cadastrado.");
+            return true;
         }
     }
 }
