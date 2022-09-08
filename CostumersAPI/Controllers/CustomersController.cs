@@ -100,9 +100,9 @@ namespace CustomersAPI.Controllers
                 _customerService.Delete(id);
                 return NoContent();
             }
-            catch (ArgumentException)
+            catch (ArgumentException e)
             {
-                return NotFound($"Nenhum recurso encontrado com o ID: {id}");
+                return NotFound(e.Message);
             }
             catch (Exception e)
             {
@@ -121,9 +121,9 @@ namespace CustomersAPI.Controllers
                 _customerService.Update(id, customer);
                 return Ok("Cliente atualizado com sucesso");
             }
-            catch (ArgumentException)
+            catch (ArgumentException e)
             {
-                return NotFound($"Nenhum recurso encontrado com o ID: {id}");
+                return NotFound(e.Message);
             }
             catch (ValidationException e)
             {

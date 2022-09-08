@@ -38,7 +38,7 @@ namespace DomainServices
 
         public void Remove(int id)
         {
-            if (!CustomerExists(id)) throw new ArgumentException();
+            if (!CustomerExists(id)) throw new ArgumentException($"Nenhum recurso encontrado com o ID: {id}");
             var customerToBeRemoved = GetById(id);
             _microserviceDbContext.Remove(customerToBeRemoved);
             _microserviceDbContext.SaveChanges(true);
@@ -46,7 +46,7 @@ namespace DomainServices
 
         public void Update(CustomerBase customerToUpdate)
         {
-            if (!CustomerExists(customerToUpdate.Id)) throw new ArgumentException();
+            if (!CustomerExists(customerToUpdate.Id)) throw new ArgumentException($"Nenhum recurso encontrado com o ID: {customerToUpdate.Id}");
             TryValidateCustomer(customerToUpdate);
             _microserviceDbContext.CustomerBase.Update(customerToUpdate);
             _microserviceDbContext.SaveChanges();
