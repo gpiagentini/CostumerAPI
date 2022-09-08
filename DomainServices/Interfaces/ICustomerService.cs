@@ -7,7 +7,7 @@ namespace DomainServices.Interfaces
     {
         int Add(CustomerBase customer);
         CustomerBase GetById(int id);
-        List<CustomerBase> GetAll();
+        IEnumerable<CustomerBase> GetAll();
         void Remove(int id);
         void Update(CustomerBase customer);
     }

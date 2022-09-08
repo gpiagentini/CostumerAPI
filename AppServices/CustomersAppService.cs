@@ -31,10 +31,10 @@ namespace AppServices
             return _mapper.Map<GetCustomerResponse>(customerBase);
         }
 
-        public List<GetCustomerResponse> GetAll()
+        public IEnumerable<GetCustomerResponse> GetAll()
         {
             var customerBaseList = _customerRepository.GetAll();
-            return _mapper.Map<List<GetCustomerResponse>>(customerBaseList);
+            return _mapper.Map<IEnumerable<GetCustomerResponse>>(customerBaseList);
         }
 
         public void Delete(int id)

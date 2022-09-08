@@ -7,7 +7,7 @@ namespace AppServices.Interfaces
     {
         int Add(CreateCustomerRequest customer);
         GetCustomerResponse Get(int id);
-        List<GetCustomerResponse> GetAll();
+        IEnumerable<GetCustomerResponse> GetAll();
         void Delete(int id);
         void Update(int id, UpdateCustomerRequest customer);
     }

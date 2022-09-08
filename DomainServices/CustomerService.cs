@@ -31,7 +31,7 @@ namespace DomainServices
             return customer;
         }
 
-        public List<CustomerBase> GetAll()
+        public IEnumerable<CustomerBase> GetAll()
         {
             return _microserviceDbContext.CustomerBase.ToList();
         }
