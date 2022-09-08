@@ -2,6 +2,7 @@ using AppServices;
 using AppServices.Interfaces;
 using DomainServices;
 using DomainServices.Interfaces;
+using EntityFrameworkCore.UnitOfWork.Extensions;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Data;
@@ -22,16 +23,17 @@ builder.Services.AddDbContext<MicroserviceDbContext>(options =>
         mysql => mysql.MigrationsAssembly("Infrastructure.Data"));
 });
 
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
+builder.Services.AddTransient<DbContext, MicroserviceDbContext>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
 builder.Services.AddAutoMapper(Assembly.Load("AppServices"));
+builder.Services.AddUnitOfWork<MicroserviceDbContext>();
 
 var app = builder.Build();
 

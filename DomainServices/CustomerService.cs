@@ -1,71 +1,74 @@
 ﻿using DomainModels;
 using DomainServices.Exceptions;
 using DomainServices.Interfaces;
+using EntityFrameworkCore.Repository.Interfaces;
+using EntityFrameworkCore.UnitOfWork.Interfaces;
 using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DomainServices
 {
-    public class CustomerService : ICustomerService
+    public class CustomerService : ServiceBase, ICustomerService
     {
-        private readonly MicroserviceDbContext _microserviceDbContext;
-
-        public CustomerService(MicroserviceDbContext microserviceDbContext)
+        private readonly IRepository<CustomerBase> _customerRepository;
+        public CustomerService(IUnitOfWork<MicroserviceDbContext> unitOfWork, IRepositoryFactory<MicroserviceDbContext> repositoryFactory)
+            : base(unitOfWork, repositoryFactory)
         {
-            _microserviceDbContext = microserviceDbContext ?? throw new ArgumentNullException(nameof(microserviceDbContext));
+            _customerRepository = RepositoryFactory.Repository<CustomerBase>();
         }
 
         public int Add(CustomerBase customer)
         {
             TryValidateCustomer(customer);
-            _microserviceDbContext.CustomerBase.Add(customer);
-            _microserviceDbContext.SaveChanges();
+            _customerRepository.Add(customer);
+            UnitOfWork.SaveChanges();
             return customer.Id;
         }
 
         public CustomerBase GetById(int id)
         {
-            CustomerBase customer = _microserviceDbContext.CustomerBase.Find(id);
-            return customer;
+            var query = _customerRepository.SingleResultQuery()
+                                           .AndFilter(customer => customer.Id.Equals(id));
+            return _customerRepository.FirstOrDefault(query);
         }
 
         public IEnumerable<CustomerBase> GetAll()
         {
-            return _microserviceDbContext.CustomerBase.ToList();
+            var query = _customerRepository.MultipleResultQuery();
+            return _customerRepository.Search(query);
         }
 
         public void Remove(int id)
         {
             if (!CustomerExists(id)) throw new ArgumentException($"Nenhum recurso encontrado com o ID: {id}");
             var customerToBeRemoved = GetById(id);
-            _microserviceDbContext.Remove(customerToBeRemoved);
-            _microserviceDbContext.SaveChanges(true);
+            _customerRepository.Remove(customerToBeRemoved);
+            UnitOfWork.SaveChanges(true);
         }
 
         public void Update(CustomerBase customerToUpdate)
         {
             if (!CustomerExists(customerToUpdate.Id)) throw new ArgumentException($"Nenhum recurso encontrado com o ID: {customerToUpdate.Id}");
             TryValidateCustomer(customerToUpdate);
-            _microserviceDbContext.CustomerBase.Update(customerToUpdate);
-            _microserviceDbContext.SaveChanges();
+            _customerRepository.Update(customerToUpdate);
+            UnitOfWork.SaveChanges();
         }
 
         private bool CustomerExists(int id)
         {
-            return _microserviceDbContext.CustomerBase.Any(customer => customer.Id == id);
+            return _customerRepository.Any(customer => customer.Id == id);
         }
 
         private bool IsCpfUnique(CustomerBase customerToBeValidated)
         {
-            bool isCpfUnique = !_microserviceDbContext.CustomerBase.Any(customer => customer.Cpf.Equals(customerToBeValidated.Cpf) && !customer.Id.Equals(customerToBeValidated.Id));
+            bool isCpfUnique = !_customerRepository.Any(customer => customer.Cpf.Equals(customerToBeValidated.Cpf) && !customer.Id.Equals(customerToBeValidated.Id));
             return isCpfUnique;
         }
 
         private bool IsEmailUnique(CustomerBase customerToBeValidated)
         {
-            bool isEmailUnique = !_microserviceDbContext.CustomerBase.Any(customer => customer.Email.Equals(customerToBeValidated.Email) && !customer.Id.Equals(customerToBeValidated.Id));
+            bool isEmailUnique = !_customerRepository.Any(customer => customer.Email.Equals(customerToBeValidated.Email) && !customer.Id.Equals(customerToBeValidated.Id));
             return isEmailUnique;
         }
 
@@ -75,7 +78,7 @@ namespace DomainServices
         private bool TryValidateCustomer(CustomerBase customer)
         {
             if (!IsCpfUnique(customer)) throw new CustomerDatabaseValidatorException($"Cpf já cadastrado.");
-            if (!IsEmailUnique(customer)) throw new CustomerDatabaseValidatorException($"Email {customer.Email} já cadastrado.");
+            if (!IsEmailUnique(customer)) throw new CustomerDatabaseValidatorException($"Email já cadastrado.");
             return true;
         }
     }
