@@ -13,8 +13,6 @@ namespace Infrastructure.Data
             
         }
 
-        public DbSet<CustomerBase> CustomerBase { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Infrastructure.Data"));
