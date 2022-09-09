@@ -8,6 +8,7 @@ namespace AppServices.Validations
     public class CreateCustomerValidator : AbstractValidator<CreateCustomerRequest>
     {
         public CreateCustomerValidator()
+
         {
             RuleFor(costumer => costumer.FullName)
                 .NotEmpty().WithMessage("Favor especificar o campo \"Nome completo\"");

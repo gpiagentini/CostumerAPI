@@ -31,6 +31,7 @@ namespace CustomersAPI.Controllers
         [ProducesResponseType(typeof(string), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+
         public IActionResult Post(CreateCustomerRequest customer)
         {
             try
