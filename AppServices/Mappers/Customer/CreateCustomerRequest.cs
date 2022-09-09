@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace DomainModels
+namespace AppServices.Mappers.Customer
 {
-    public class CustomerBase : EntityBase
+    public class CreateCustomerRequest
     {
-        public CustomerBase(
+        public CreateCustomerRequest(
             string fullName,
             string email,
             string cpf,
@@ -16,7 +16,8 @@ namespace DomainModels
             string city,
             string postalCode,
             string address,
-            int number)
+            int number,
+            string emailConfirmation)
         {
             FullName = fullName;
             Email = email;
@@ -30,7 +31,9 @@ namespace DomainModels
             PostalCode = postalCode;
             Address = address;
             Number = number;
+            EmailConfirmation = emailConfirmation;
         }
+        
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Cpf { get; set; }
@@ -43,5 +46,6 @@ namespace DomainModels
         public string PostalCode { get; set; }
         public string Address { get; set; }
         public int Number { get; set; }
+        public string EmailConfirmation { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace DomainModels
+namespace AppServices.Mappers.Customer
 {
-    public class CustomerBase : EntityBase
+    public class UpdateCustomerRequest
     {
-        public CustomerBase(
+        public UpdateCustomerRequest(
             string fullName,
             string email,
             string cpf,

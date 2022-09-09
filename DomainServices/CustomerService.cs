@@ -1,12 +1,12 @@
 ﻿using DomainModels;
-using DomainModels.Interfaces;
+using DomainServices.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace DomainServices
 {
-    public class CustomerService : ICustomerRepository
+    public class CustomerService : ICustomerService
     {
         private readonly List<CustomerBase> _inMemoryCustomers = new();
 
@@ -30,7 +30,7 @@ namespace DomainServices
         public void Remove(int id)
         {
             var customerToRemove = _inMemoryCustomers.FirstOrDefault(customer => customer.Id == id);
-            if (customerToRemove == null) throw new ArgumentException();
+            if (customerToRemove == null) throw new ArgumentException($"Nenhum recurso encontrado com o ID: {id}");
             _inMemoryCustomers.Remove(customerToRemove);
         }
 

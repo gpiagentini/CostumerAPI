@@ -1,13 +1,14 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 using AppServices.CustomExtensions;
-using DomainModels;
+using AppServices.Mappers.Customer;
 
 namespace AppServices.Validations
 {
-    public class NewCustomerValidator : AbstractValidator<CustomerBase>
+    public class CreateCustomerValidator : AbstractValidator<CreateCustomerRequest>
     {
-        public NewCustomerValidator()
+        public CreateCustomerValidator()
+
         {
             RuleFor(costumer => costumer.FullName)
                 .NotEmpty().WithMessage("Favor especificar o campo \"Nome completo\"");
@@ -51,7 +52,6 @@ namespace AppServices.Validations
                 .NotEmpty().WithMessage("Favor especificar o campo \"Número\"");
 
             RuleFor(costumer => costumer)
-                .NotEmpty().WithMessage("Favor informar a validação do E-mail")
                 .Must(costumer => costumer.EmailConfirmation.Equals(costumer.Email)).WithMessage("Confirmação de Email divergente");
         }
     }

@@ -1,20 +1,17 @@
 ﻿using System;
 
-namespace DomainModels
+namespace AppServices.Mappers.Customer
 {
-    public class CustomerBase : EntityBase
+    public class GetCustomerResponse
     {
-        public CustomerBase(
+        public GetCustomerResponse(
             string fullName,
             string email,
             string cpf,
             string cellphone,
             DateTime birthdate,
-            bool emailSms,
-            bool whatsapp,
             string country,
             string city,
-            string postalCode,
             string address,
             int number)
         {
@@ -23,11 +20,8 @@ namespace DomainModels
             Cpf = cpf;
             Cellphone = cellphone;
             Birthdate = birthdate;
-            EmailSms = emailSms;
-            Whatsapp = whatsapp;
             Country = country;
             City = city;
-            PostalCode = postalCode;
             Address = address;
             Number = number;
         }
@@ -36,11 +30,8 @@ namespace DomainModels
         public string Cpf { get; set; }
         public string Cellphone { get; set; }
         public DateTime Birthdate { get; set; }
-        public bool EmailSms { get; set; }
-        public bool Whatsapp { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
-        public string PostalCode { get; set; }
         public string Address { get; set; }
         public int Number { get; set; }
     }
