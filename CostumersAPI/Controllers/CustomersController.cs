@@ -1,11 +1,13 @@
 using AppServices.Interfaces;
 using AppServices.Mappers.Customer;
 using DomainModels;
+using DomainServices.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 
 namespace CustomersAPI.Controllers
 {
@@ -41,6 +43,10 @@ namespace CustomersAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
+            catch (CustomerDatabaseValidatorException e)
+            {
+                return BadRequest(e.Message);
+            }
             catch (Exception e)
             {
                 _logger.LogError(e, "Error occurred while trying to save new customer.");
@@ -48,7 +54,7 @@ namespace CustomersAPI.Controllers
             }
         }
 
-        [HttpGet("{id}", Name="Get")]
+        [HttpGet("{id}", Name = "Get")]
         [ProducesResponseType(typeof(CustomerBase), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -57,9 +63,7 @@ namespace CustomersAPI.Controllers
             try
             {
                 var customer = _customerService.Get(id);
-                if (customer == null)
-                    return NotFound($"Nenhum cliente encontrado com o ID: {id}");
-                return Ok(customer);
+                return customer == null ? NotFound($"Nenhum cliente encontrado com o ID: {id}") : Ok(customer);
             }
             catch (Exception e)
             {
@@ -77,18 +81,19 @@ namespace CustomersAPI.Controllers
             try
             {
                 var customers = _customerService.GetAll();
-                return customers.Count == 0 ? NoContent() : Ok(customers);
+                return customers.Any() ? Ok(customers) : NoContent();
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Error occurred while trying to fetch all customers.");
-                return Problem($"Não foi possível completar solicitação");
+                return Problem($"Não foi possível completar solicitação.");
             }
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(int id)
         {
             try
@@ -99,6 +104,11 @@ namespace CustomersAPI.Controllers
             catch (ArgumentException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error ocurred while trying to delete customer {id}", id);
+                return Problem("Não foi possível completar sua solicitação.");
             }
         }
 
@@ -112,13 +122,22 @@ namespace CustomersAPI.Controllers
                 _customerService.Update(id, customer);
                 return Ok("Cliente atualizado com sucesso");
             }
-            catch (ArgumentOutOfRangeException)
+            catch (ArgumentException e)
             {
-                return NotFound($"Nenhum recurso encontrado com o ID: {id}");
+                return NotFound(e.Message);
             }
             catch (ValidationException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (CustomerDatabaseValidatorException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error ocurred while trying to update customer {id}", id);
+                return Problem("Não foi possível completar a solicitação");
             }
         }
     }

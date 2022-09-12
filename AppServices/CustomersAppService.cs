@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System;
-using DomainModels;
-using DomainServices;
-using AppServices.Interfaces;
+﻿using AppServices.Interfaces;
 using AppServices.Mappers.Customer;
 using AutoMapper;
+using DomainModels;
 using DomainServices.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace AppServices
 {
@@ -32,10 +31,10 @@ namespace AppServices
             return _mapper.Map<GetCustomerResponse>(customerBase);
         }
 
-        public List<GetCustomerResponse> GetAll()
+        public IEnumerable<GetCustomerResponse> GetAll()
         {
             var customerBaseList = _customerRepository.GetAll();
-            return _mapper.Map<List<GetCustomerResponse>>(customerBaseList);
+            return _mapper.Map<IEnumerable<GetCustomerResponse>>(customerBaseList);
         }
 
         public void Delete(int id)

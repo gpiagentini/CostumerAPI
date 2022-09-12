@@ -4,7 +4,10 @@ using DomainServices;
 using DomainServices.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
@@ -12,13 +15,20 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<MicroserviceDbContext>(options =>
+{
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
+        ServerVersion.Parse("8.0.30"),
+        mysql => mysql.MigrationsAssembly("Infrastructure.Data"));
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
 builder.Services.AddAutoMapper(Assembly.Load("AppServices"));
