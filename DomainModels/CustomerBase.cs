@@ -45,6 +45,7 @@ namespace DomainModels
         public string PostalCode { get; set; }
         public string Address { get; set; }
         public int Number { get; set; }
-        public CustomerBankInfo BankInfo { get; }
+        public CustomerBankInfo BankInfo { get; set;  }
+        public ICollection<Portfolio> Portfolios { get; set; }
     }
 }
