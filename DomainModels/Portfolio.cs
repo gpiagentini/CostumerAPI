@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DomainModels
 {
@@ -13,5 +9,6 @@ namespace DomainModels
         public decimal TotalBalance { get; set; }
         public int CustomerId { get; }
         public CustomerBase Customer { get; }
+        public ICollection<PortfolioProduct> Products { get; set; }
     }
 }
