@@ -1,9 +1,9 @@
 ﻿using AppServices.CustomExtensions;
-using AppServices.Mappers.Customer;
+using AppServices.Mappers.Customer.Requests;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace AppServices.Validations
+namespace AppServices.Validations.Customer
 {
     public class CreateCustomerValidator : AbstractValidator<CreateCustomerRequest>
     {

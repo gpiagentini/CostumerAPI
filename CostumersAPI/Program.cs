@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,8 +29,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<ICustomerBankInfoService, CustomerBankInfoService>();
 builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
-builder.Services.AddTransient<DbContext, MicroserviceDbContext>();
+builder.Services.AddTransient<ICustomerBankInfoAppService, CustomerBankInfoAppService>();
+builder.Services.AddScoped<DbContext, MicroserviceDbContext>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
 builder.Services.AddAutoMapper(Assembly.Load("AppServices"));

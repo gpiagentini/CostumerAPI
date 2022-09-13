@@ -12,6 +12,10 @@ namespace Infrastructure.Data.Mapping
 
             builder.HasKey(e => e.Id);
 
+            builder.HasOne<CustomerBankInfo>(c => c.BankInfo)
+                .WithOne(b => b.Customer)
+                .HasForeignKey<CustomerBankInfo>(b => b.CustomerId);
+
             builder.Property(e => e.Id)
                 .HasColumnName("id")
                 .ValueGeneratedOnAdd();

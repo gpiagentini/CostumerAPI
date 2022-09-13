@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DomainModels
 {
@@ -43,5 +45,6 @@ namespace DomainModels
         public string PostalCode { get; set; }
         public string Address { get; set; }
         public int Number { get; set; }
+        public CustomerBankInfo BankInfo { get; }
     }
 }

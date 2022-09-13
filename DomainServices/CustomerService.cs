@@ -4,8 +4,10 @@ using DomainServices.Interfaces;
 using EntityFrameworkCore.Repository.Interfaces;
 using EntityFrameworkCore.UnitOfWork.Interfaces;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DomainServices
 {
@@ -21,6 +23,7 @@ namespace DomainServices
         public int Add(CustomerBase customer)
         {
             TryValidateCustomer(customer);
+            customer.BankInfo = new CustomerBankInfo();
             _customerRepository.Add(customer);
             UnitOfWork.SaveChanges();
             return customer.Id;
@@ -29,13 +32,15 @@ namespace DomainServices
         public CustomerBase GetById(int id)
         {
             var query = _customerRepository.SingleResultQuery()
-                                           .AndFilter(customer => customer.Id.Equals(id));
+                .AndFilter(customer => customer.Id.Equals(id))
+                .Include(query => query.Include(c => c.BankInfo));
             return _customerRepository.FirstOrDefault(query);
         }
 
         public IEnumerable<CustomerBase> GetAll()
         {
-            var query = _customerRepository.MultipleResultQuery();
+            var query = _customerRepository.MultipleResultQuery()
+                .Include(query => query.Include(c => c.BankInfo));
             return _customerRepository.Search(query);
         }
 

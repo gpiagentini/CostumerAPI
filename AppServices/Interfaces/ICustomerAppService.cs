@@ -1,4 +1,5 @@
-﻿using AppServices.Mappers.Customer;
+﻿using AppServices.Mappers.Customer.Requests;
+using AppServices.Mappers.Customer.Responses;
 using System.Collections.Generic;
 
 namespace AppServices.Interfaces

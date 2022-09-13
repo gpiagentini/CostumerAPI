@@ -1,5 +1,5 @@
 using AppServices.Interfaces;
-using AppServices.Mappers.Customer;
+using AppServices.Mappers.Customer.Requests;
 using DomainModels;
 using DomainServices.Exceptions;
 using FluentValidation;

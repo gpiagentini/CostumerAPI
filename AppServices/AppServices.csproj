@@ -13,4 +13,8 @@
 		<ProjectReference Include="..\DomainServices\DomainServices.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Validations\CustomerBankInfo\" />
+	</ItemGroup>
+
 </Project>

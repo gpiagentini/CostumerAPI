@@ -1,5 +1,6 @@
 ﻿using AppServices.Interfaces;
-using AppServices.Mappers.Customer;
+using AppServices.Mappers.Customer.Requests;
+using AppServices.Mappers.Customer.Responses;
 using AutoMapper;
 using DomainModels;
 using DomainServices.Interfaces;
@@ -34,7 +35,7 @@ namespace AppServices
         public IEnumerable<GetCustomerResponse> GetAll()
         {
             var customerBaseList = _customerService.GetAll();
-            return _mapper.Map<IEnumerable<GetCustomerResponse>>(customerBaseList);
+            return _mapper.Map<IEnumerable<GetCustomerResponse>>(customerBaseList); 
         }
 
         public void Delete(int id)

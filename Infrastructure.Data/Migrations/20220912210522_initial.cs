@@ -46,15 +46,51 @@ namespace Infrastructure.Data.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "customerBankInfo",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    accountBalance = table.Column<decimal>(type: "decimal(65,30)", nullable: false, defaultValue: 0m),
+                    customerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_customerBankInfo", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_customerBankInfo_customer_customerId",
+                        column: x => x.customerId,
+                        principalTable: "customer",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateIndex(
                 name: "IX_customer_cpf",
                 table: "customer",
                 column: "cpf",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_customer_email",
+                table: "customer",
+                column: "email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_customerBankInfo_customerId",
+                table: "customerBankInfo",
+                column: "customerId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "customerBankInfo");
+
             migrationBuilder.DropTable(
                 name: "customer");
         }

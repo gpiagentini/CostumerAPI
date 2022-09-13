@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(MicroserviceDbContext))]
-    [Migration("20220906192822_email-as-unique")]
-    partial class emailasunique
+    [Migration("20220912210522_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,31 @@ namespace Infrastructure.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("DomainModels.CustomerBankInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<decimal>("AccountBalance")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(65,30)")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("accountBalance");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int")
+                        .HasColumnName("customerId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.ToTable("customerBankInfo", (string)null);
+                });
 
             modelBuilder.Entity("DomainModels.CustomerBase", b =>
                 {
@@ -100,6 +125,22 @@ namespace Infrastructure.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("customer", (string)null);
+                });
+
+            modelBuilder.Entity("DomainModels.CustomerBankInfo", b =>
+                {
+                    b.HasOne("DomainModels.CustomerBase", "Customer")
+                        .WithOne("BankInfo")
+                        .HasForeignKey("DomainModels.CustomerBankInfo", "CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("DomainModels.CustomerBase", b =>
+                {
+                    b.Navigation("BankInfo");
                 });
 #pragma warning restore 612, 618
         }
