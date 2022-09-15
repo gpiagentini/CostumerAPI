@@ -1,4 +1,5 @@
 ﻿using DomainModels;
+using DomainServices.Exceptions;
 using DomainServices.Interfaces;
 using EntityFrameworkCore.Repository.Interfaces;
 using EntityFrameworkCore.UnitOfWork.Interfaces;
@@ -29,6 +30,21 @@ namespace DomainServices
             var query = _customerBankInfoRepository.MultipleResultQuery()
                   .Include(query => query.Include(c => c.Customer));
             return _customerBankInfoRepository.Search(query);
+        }
+
+        public void WithdrawValue(CustomerBankInfo customerBankInfo, decimal value)
+        {
+            if (customerBankInfo.AccountBalance < value) throw new BankInfoDatabaseValidatorException("Saldo insuficiente pára completar a solicitação.");
+            customerBankInfo.AccountBalance -= value;
+            _customerBankInfoRepository.Update(customerBankInfo);
+            UnitOfWork.SaveChanges();
+        }
+
+        public void DepositValue(CustomerBankInfo customerBankInfo, decimal value)
+        {
+            customerBankInfo.AccountBalance += value;
+            _customerBankInfoRepository.Update(customerBankInfo);
+            UnitOfWork.SaveChanges();
         }
     }
 }

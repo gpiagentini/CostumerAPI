@@ -7,5 +7,7 @@ namespace DomainServices.Interfaces
     {
         CustomerBankInfo GetByCustomerId(int customerId);
         IEnumerable<CustomerBankInfo> GetAll();
+        void WithdrawValue(CustomerBankInfo customerBankInfo, decimal value);
+        void DepositValue(CustomerBankInfo customerBankInfo, decimal value);
     }
 }

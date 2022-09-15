@@ -1,5 +1,5 @@
-﻿using AppServices.Mappers.CustomerBankInfo.Responses;
-using DomainModels;
+﻿using AppServices.Mappers.CustomerBankInfo.Requests;
+using AppServices.Mappers.CustomerBankInfo.Responses;
 using System.Collections.Generic;
 
 namespace AppServices.Interfaces
@@ -8,5 +8,6 @@ namespace AppServices.Interfaces
     {
         GetBankInfoResponse GetByCustomerId(int customerId);
         IEnumerable<GetBankInfoWithCustomerResponse> GetAll();
+        void UpdateAccountByCustomerId(int customerId, UpdateCustomerBankInfoRequest request);
     }
 }

@@ -35,7 +35,7 @@ builder.Services.AddTransient<ICustomerBankInfoAppService, CustomerBankInfoAppSe
 builder.Services.AddScoped<DbContext, MicroserviceDbContext>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load(nameof(AppServices)));
-builder.Services.AddAutoMapper(Assembly.Load("AppServices"));
+builder.Services.AddAutoMapper(Assembly.Load(nameof(AppServices)));
 builder.Services.AddUnitOfWork<MicroserviceDbContext>();
 
 var app = builder.Build();
