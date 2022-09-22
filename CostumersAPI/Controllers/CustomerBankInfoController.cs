@@ -23,7 +23,7 @@ namespace CustomersAPI.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet("/customer/{id}", Name = "GetByCustomerId")]
+        [HttpGet("customer/{id}", Name = "GetByCustomerId")]
         [ProducesResponseType(typeof(CustomerBankInfo), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
@@ -53,7 +53,7 @@ namespace CustomersAPI.Controllers
 
         }
 
-        [HttpPut("/customer/{id}", Name = "UpdateByCustomerId")]
+        [HttpPut("customer/{id}", Name = "UpdateByCustomerId")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public IActionResult UpdateByCustomerId(int id, UpdateCustomerBankInfoRequest request)

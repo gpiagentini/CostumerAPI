@@ -59,7 +59,7 @@ namespace DomainServices
             UnitOfWork.SaveChanges();
         }
 
-        private bool CustomerExists(int id)
+        public bool CustomerExists(int id)
         {
             return _customerRepository.Any(customer => customer.Id == id);
         }

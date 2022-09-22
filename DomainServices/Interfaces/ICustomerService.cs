@@ -10,5 +10,7 @@ namespace DomainServices.Interfaces
         IEnumerable<CustomerBase> GetAll();
         void Remove(int id);
         void Update(CustomerBase customer);
+
+        bool CustomerExists(int id);
     }
 }
