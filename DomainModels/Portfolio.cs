@@ -15,5 +15,6 @@ namespace DomainModels
         public int CustomerId { get; set; }
         public CustomerBase Customer { get; }
         public ICollection<PortfolioProduct> Products { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
