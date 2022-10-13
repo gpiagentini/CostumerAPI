@@ -31,6 +31,7 @@ builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ICustomerBankInfoService, CustomerBankInfoService>();
 builder.Services.AddTransient<ICustomerAppService, CustomersAppService>();
 builder.Services.AddTransient<ICustomerBankInfoAppService, CustomerBankInfoAppService>();
+builder.Services.AddTransient<IProductAppService, ProductAppService>();
 builder.Services.AddTransient<IPortfolioAppService, PortfolioAppService>();
 builder.Services.AddTransient<IPortfolioService, PortfolioService>();
 builder.Services.AddTransient<IProductService, ProductService>();

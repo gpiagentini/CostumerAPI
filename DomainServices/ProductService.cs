@@ -16,6 +16,13 @@ namespace DomainServices
             _productRepository = RepositoryFactory.Repository<Product>();
         }
 
+        public int Create(Product product)
+        {
+            _productRepository.Add(product);
+            UnitOfWork.SaveChanges();
+            return product.Id;
+        }
+
         public Product GetById(int id)
         {
             var query = _productRepository.SingleResultQuery()

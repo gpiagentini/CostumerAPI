@@ -4,7 +4,8 @@ namespace DomainServices.Interfaces
 {
     public interface IProductService
     {
-        public Product GetById(int id);
-        public bool ProductExists(int id);
+        Product GetById(int id);
+        int Create(Product product);
+        bool ProductExists(int id);
     }
 }
