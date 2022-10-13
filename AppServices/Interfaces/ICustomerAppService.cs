@@ -1,4 +1,5 @@
-﻿using AppServices.Mappers.Customer;
+﻿using AppServices.Mappers.Customer.Requests;
+using AppServices.Mappers.Customer.Responses;
 using System.Collections.Generic;
 
 namespace AppServices.Interfaces
@@ -7,7 +8,7 @@ namespace AppServices.Interfaces
     {
         int Add(CreateCustomerRequest customer);
         GetCustomerResponse Get(int id);
-        List<GetCustomerResponse> GetAll();
+        IEnumerable<GetCustomerResponse> GetAll();
         void Delete(int id);
         void Update(int id, UpdateCustomerRequest customer);
     }
