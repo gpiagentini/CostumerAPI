@@ -14,7 +14,7 @@ namespace AppServices.Profiles
                 .ForMember(dst => dst.CustomerId, map => map.MapFrom(src => src.CustomerId));
 
             CreateMap<Portfolio, GetPortfolioByIdPortfolioResponse>()
-                .ForMember(dst => dst.ProductSymbols, map => map.MapFrom(src => src.Products.Select(product => product.Symbol).ToList()));
+                .ForMember(dst => dst.ProductSymbols, map => map.MapFrom(src => src.Products.Select(product => product.Symbol)));
         }
     }
 }
