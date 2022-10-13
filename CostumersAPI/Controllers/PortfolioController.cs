@@ -1,5 +1,4 @@
-﻿using AppServices;
-using AppServices.Interfaces;
+﻿using AppServices.Interfaces;
 using AppServices.Mappers.Portfolio.Requests;
 using DomainModels;
 using DomainServices.Exceptions;
@@ -59,6 +58,115 @@ namespace CustomersAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception ocurred while trying to fetch porfolio {id}", idPortfolio);
+                return Problem("Não foi possível completar a solicitação");
+            }
+        }
+
+        [HttpPut("deposit")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public IActionResult Deposit(DepositRequest depositRequest)
+        {
+            try
+            {
+                _potfolioAppService.ProcessDepositRequest(depositRequest);
+                return Ok();
+            }
+            catch (PortfolioDatabaseValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception ocurred while trying to deposit");
+                return Problem("Não foi possível completar a solicitação");
+            }
+        }
+
+        [HttpPut("withdraw/balance")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public IActionResult WithdrawBalance(WithdrawBalanceRequest withdrawRequest)
+        {
+            try
+            {
+                _potfolioAppService.ProcessWithdrawRequest(withdrawRequest);
+                return Ok();
+            }
+            catch (PortfolioDatabaseValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception while trying to withdraw balance from portfolio");
+                return Problem("Não foi possível completar a solicitação");
+            }
+        }
+
+        [HttpPut("investment")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public IActionResult Invest(InvestmentRequest investmentRequest)
+        {
+            try
+            {
+                _potfolioAppService.ProcessInvestmentRequest(investmentRequest, OrderDirection.Buy);
+                return Ok();
+            }
+            catch (PortfolioDatabaseValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception ocurred while trying to create an investment");
+                return BadRequest("Não foi possível completar a solicitação");
+            }
+        }
+
+        [HttpPut("withdraw/product")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        public IActionResult WithdrawProduct(InvestmentRequest investmentRequest)
+        {
+            try
+            {
+                _potfolioAppService.ProcessInvestmentRequest(investmentRequest, OrderDirection.Sell);
+                return Ok();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (PortfolioDatabaseValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception ocurred while trying to withdraw product");
+                return Problem("Não foi possível completar a solicitação");
+            }
+        }
+
+        [HttpDelete("{idPortfolio}")]
+        public IActionResult Delete(int idPortfolio)
+        {
+            try
+            {
+                _potfolioAppService.Delete(idPortfolio);
+                return Ok();
+            }
+            catch (PortfolioDatabaseValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception while trying to delete portfolio {}", idPortfolio);
                 return Problem("Não foi possível completar a solicitação");
             }
         }

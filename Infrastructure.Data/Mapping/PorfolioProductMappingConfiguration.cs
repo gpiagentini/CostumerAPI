@@ -19,14 +19,6 @@ namespace Infrastructure.Data.Mapping
                 .HasColumnName("productId");
 
             builder.HasKey(x => new { x.PortfolioId, x.ProductId });
-
-            builder.HasOne(pp => pp.Portfolio)
-                .WithMany(po => po.Products)
-                .HasForeignKey(pp => pp.PortfolioId);
-
-            builder.HasOne(pp => pp.Product)
-                .WithMany(po => po.Portfolios)
-                .HasForeignKey(pp => pp.ProductId);
         }
     }
 }

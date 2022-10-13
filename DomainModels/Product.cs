@@ -10,7 +10,7 @@ namespace DomainModels
         public DateTime ExpirationAt { get; set; }
         public int DaysToExpire { get; set; }
         public ProductType Type { get; set; }
-        public ICollection<PortfolioProduct> Portfolios { get; set; }
+        public ICollection<Portfolio> Portfolios { get; set; }
         public ICollection<Order> Orders { get; set; }
     }
 

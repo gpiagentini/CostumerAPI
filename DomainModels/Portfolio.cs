@@ -14,7 +14,17 @@ namespace DomainModels
         public decimal TotalBalance { get; set; }
         public int CustomerId { get; set; }
         public CustomerBase Customer { get; }
-        public ICollection<PortfolioProduct> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
         public ICollection<Order> Orders { get; set; }
+
+        public void Debit(decimal value)
+        {
+            TotalBalance -= value;
+        }
+
+        public void Deposit(decimal value)
+        {
+            TotalBalance += value;
+        }
     }
 }

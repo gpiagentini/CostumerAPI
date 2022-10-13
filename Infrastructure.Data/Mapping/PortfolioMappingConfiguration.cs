@@ -44,6 +44,14 @@ namespace Infrastructure.Data.Mapping
             builder.HasOne(p => p.Customer)
                 .WithMany(c => c.Portfolios)
                 .HasForeignKey(p => p.CustomerId);
+
+            builder.HasMany(portfolio => portfolio.Products)
+                .WithMany(products => products.Portfolios)
+                .UsingEntity<PortfolioProduct>(portfolioProduct =>
+                {
+                    portfolioProduct.HasOne(prop => prop.Portfolio).WithMany().HasForeignKey(prop => prop.PortfolioId);
+                    portfolioProduct.HasOne(p => p.Product).WithMany().HasForeignKey(prop => prop.ProductId);
+                });
         }
     }
 }
